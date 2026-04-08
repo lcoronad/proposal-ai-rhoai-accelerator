@@ -29,7 +29,7 @@ spec:
           readinessProbe:
             failureThreshold: 3
             httpGet:
-              path: /notebook/parasol-insurance/standard-workbench/api
+              path: /notebook/proposal-rh-ai/standard-workbench/api
               port: notebook-port
               scheme: HTTP
             initialDelaySeconds: 10
@@ -39,7 +39,7 @@ spec:
           livenessProbe:
             failureThreshold: 3
             httpGet:
-              path: /notebook/parasol-insurance/standard-workbench/api
+              path: /notebook/proposal-rh-ai/standard-workbench/api
               port: notebook-port
               scheme: HTTP
             initialDelaySeconds: 10
@@ -52,9 +52,9 @@ spec:
                 --ServerApp.port=8888
                 --ServerApp.token=''
                 --ServerApp.password=''
-                --ServerApp.base_url=/notebook/parasol-insurance/standard-workbench
+                --ServerApp.base_url=/notebook/proposal-rh-ai/standard-workbench
                 --ServerApp.quit_button=False
-                --ServerApp.tornado_settings={"user":"user1","hub_host":"","hub_prefix":"/projects/parasol-insurance"}
+                --ServerApp.tornado_settings={"user":"user1","hub_host":"","hub_prefix":"/projects/proposal-rh-ai"}
             - name: JUPYTER_IMAGE
               value: 'image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/s2i-generic-data-science-notebook:2024.2'
           ports:
