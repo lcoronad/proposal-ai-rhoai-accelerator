@@ -2,7 +2,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: standard-workbench
-  namespace: parasol-insurance
+  namespace: proposal-rh-ai
 spec:
   accessModes:
     - ReadWriteOnce
