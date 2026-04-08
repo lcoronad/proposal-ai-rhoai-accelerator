@@ -2,6 +2,7 @@ apiVersion: llamastack.io/v1alpha1
 kind: LlamaStackDistribution
 metadata:
   name: llama-stack-milvus-remote
+  namespace: proposal-rh-ai
 spec:
   replicas: 1
   server:
