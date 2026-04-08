@@ -22,7 +22,7 @@ spec:
     kueue:
       managementState: Removed
     llamastackoperator:
-      managementState: Removed
+      managementState: Managed
     modelregistry:
       managementState: Removed
       registriesNamespace: rhoai-model-registries
