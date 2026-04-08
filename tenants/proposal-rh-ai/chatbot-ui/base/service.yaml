@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: chatbot-ui
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 7861
+      targetPort: 7861
+  type: ClusterIP
+  selector:
+    app: chatbot-ui

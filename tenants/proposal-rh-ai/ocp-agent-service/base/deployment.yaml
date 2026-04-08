@@ -1,0 +1,64 @@
+﻿kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: ocp-agent-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ocp-agent-service
+  template:
+    metadata:
+      labels:
+        app: ocp-agent-service
+    spec:
+      containers:
+        - resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
+          name: ocp-agent-service
+          env:
+            - name: ROOT_LOG_LEVEL
+              value: 'INFO'
+            - name: APP_LOG_LEVEL
+              value: 'DEBUG'
+            - name: MODEL_ID
+              value: 'llama-4-scout-17b-16e-w4a16'
+            - name: LLAMA_STACK_BASE_URL
+              value: 'http://llamastack-server.rh-proposal-ai.svc.cluster.local:8321'
+            - name: TIVALY_SEARCH_API_KEY
+              value: 'your-tivaly-search-api-key'
+            - name: TEMPERATURE
+              value: '0.95'
+            - name: TOP_P
+              value: '0.95'
+            - name: MAX_TOKENS
+              value: '4096'
+            - name: STREAM
+              value: 'False'
+            - name: VECTOR_DB_ID_SKUS
+              value: 'skus_rh_vector_db'
+          ports:
+            - containerPort: 7860
+              protocol: TCP
+          imagePullPolicy: Always
+          terminationMessagePolicy: File
+          image: 'quay.io/lcoronad/ocp-agent-service-proposal-ai:1.0.1'
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+      serviceAccountName: ocp-agent-service
+      serviceAccount: ocp-agent-service
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
