@@ -78,6 +78,10 @@ spec:
             secretKeyRef:
               name: llama-stack-db-secret
               key: POSTGRES_DB
+        - name: ENABLE_SENTENCE_TRANSFORMERS
+          value: "true"
+        - name: EMBEDDING_PROVIDER
+          value: "sentence-transformers"
       name: llama-stack
       port: 8321
     distribution:
