@@ -6,3 +6,4 @@ resources:
   - standard-workbench-pvc.yaml
   - minio-data-connection.yaml
   - standard-workbench-notebook.yaml
+  - standard-workbench-sa.yaml
