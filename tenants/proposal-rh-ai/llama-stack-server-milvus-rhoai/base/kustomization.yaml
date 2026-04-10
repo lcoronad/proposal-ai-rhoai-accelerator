@@ -15,6 +15,8 @@ resources:
 
 configMapGenerator:
   - name: llama-stack-config
+    options:
+      disableNameSuffixHash: true
     namespace: proposal-rh-ai
     files:
       - config.yaml=config.yaml
