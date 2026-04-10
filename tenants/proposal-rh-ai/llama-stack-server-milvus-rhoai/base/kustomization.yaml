@@ -15,5 +15,6 @@ resources:
 
 configMapGenerator:
   - name: llama-stack-config
+    namespace: proposal-rh-ai
     files:
       - config.yaml=config.yaml
