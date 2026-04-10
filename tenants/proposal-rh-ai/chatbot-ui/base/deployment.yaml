@@ -31,7 +31,7 @@ spec:
             - name: MODEL_ID
               value: 'llama-4-scout-17b-16e-w4a16'
             - name: LLAMA_STACK_BASE_URL
-              value: 'http://llamastack-server.rh-proposal-ai.svc.cluster.local:8321'
+              value: 'http://llama-stack-milvus-remote-service.proposal-rh-ai.svc.cluster.local:8321'
             - name: TEMPERATURE
               value: '0.95'
             - name: TOP_P

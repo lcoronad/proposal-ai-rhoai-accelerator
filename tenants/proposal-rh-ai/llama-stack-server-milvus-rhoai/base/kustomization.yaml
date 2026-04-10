@@ -12,3 +12,8 @@ resources:
   - milvus-service.yaml
   - milvus-standalone-deployment.yaml
   - llama-stack-bd-secret.yaml
+
+configMapGenerator:
+  - name: llama-stack-config
+    files:
+      - config.yaml=config.yaml
