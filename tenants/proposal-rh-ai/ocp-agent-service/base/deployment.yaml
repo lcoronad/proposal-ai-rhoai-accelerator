@@ -28,7 +28,7 @@ spec:
             - name: APP_LOG_LEVEL
               value: 'DEBUG'
             - name: MODEL_ID
-              value: 'llama-4-scout-17b-16e-w4a16'
+              value: 'llama-3-2-3b'
             - name: LLAMA_STACK_BASE_URL
               value: 'http://llama-stack-milvus-remote-service.proposal-rh-ai.svc.cluster.local:8321'
             - name: TIVALY_SEARCH_API_KEY
