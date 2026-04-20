@@ -13,7 +13,7 @@ apis:
 - files
 providers:
   inference:
-  - provider_id: ${env.VLLM_URL:+vllm-inference}
+  - provider_id: vllm-inference
     provider_type: remote::vllm
     config:
       base_url: ${env.VLLM_URL:=}
@@ -263,13 +263,11 @@ registered_resources:
   - metadata: {}
     model_id: ${env.INFERENCE_MODEL}
     provider_id: vllm-inference
-    model_type: llm
   - metadata:
       embedding_dimension: ${env.EMBEDDING_DIMENSION:=768}
     model_id: ${env.EMBEDDING_MODEL:=granite-embedding-125m-english}
     provider_id: ${env.EMBEDDING_PROVIDER:=vllm-embedding}
     provider_model_id: ${env.EMBEDDING_PROVIDER_MODEL_ID:=ibm-granite/granite-embedding-125m-english}
-    model_type: embedding
   shields: []
   vector_dbs: []
   datasets: []
