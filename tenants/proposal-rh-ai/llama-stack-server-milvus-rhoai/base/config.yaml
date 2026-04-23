@@ -256,6 +256,8 @@ registered_resources:
   - metadata: {}
     model_id: ${env.INFERENCE_MODEL}
     provider_id: vllm-inference
+    model_name: ${env.INFERENCE_MODEL_NAME:=llama-3-2-3b}
+    model_type: ${env.INFERENCE_MODEL_TYPE:=llm}
   shields: []
   vector_dbs: []
   datasets: []
