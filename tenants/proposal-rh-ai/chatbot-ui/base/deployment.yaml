@@ -29,7 +29,7 @@ spec:
             - name: APP_LOG_LEVEL
               value: 'DEBUG'
             - name: MODEL_ID
-              value: 'vllm-inference/llama-3-2-3b'
+              value: 'vllm-inference/redhataillama-31-8b-instruct'
             - name: LLAMA_STACK_BASE_URL
               value: 'http://llama-stack-milvus-remote-service.proposal-rh-ai.svc.cluster.local:8321'
             - name: TEMPERATURE

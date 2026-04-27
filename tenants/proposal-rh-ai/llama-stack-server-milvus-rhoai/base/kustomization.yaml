@@ -12,6 +12,7 @@ resources:
   - milvus-service.yaml
   - milvus-standalone-deployment.yaml
   - llama-stack-bd-secret.yaml
+  #- inferenceService.yaml
 
 configMapGenerator:
   - name: llama-stack-config
