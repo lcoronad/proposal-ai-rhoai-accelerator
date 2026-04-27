@@ -48,7 +48,7 @@ spec:
               protocol: TCP
           imagePullPolicy: Always
           terminationMessagePolicy: File
-          image: 'quay.io/lcoronad/ocp-agent-service-proposal-ai:1.1.0'
+          image: 'quay.io/lcoronad/ocp-agent-service-proposal-ai:1.1.1'
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
