@@ -42,8 +42,10 @@ spec:
               value: 'True'
             - name: MAX_INFER_ITERS
               value: '10'
-            - name: VECTOR_DB_ID_OCP
-              value: 'vs_467b2eb2-9fb7-4e0b-9ad0-0d3fa2903013'
+            - name: VECTOR_DB_NAME_OCP
+              value: 'ocp_rh_vector_db'
+            - name: OCP_TOOLGROUP_ID
+              value: 'ocp::proposal'
           ports:
             - containerPort: 7861
               protocol: TCP

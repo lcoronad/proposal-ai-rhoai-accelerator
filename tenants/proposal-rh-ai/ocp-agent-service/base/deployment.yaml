@@ -41,8 +41,8 @@ spec:
               value: '4096'
             - name: STREAM
               value: 'False'
-            - name: VECTOR_DB_ID_SKUS
-              value: 'vs_36cc39f1-6b55-4e75-8663-9f2c1607dee0'
+            - name: VECTOR_DB_NAME_SKUS
+              value: 'skus_rh_vector_db'
           ports:
             - containerPort: 7860
               protocol: TCP
