@@ -11,6 +11,7 @@ metadata:
     opendatahub.io/hardware-profile-namespace: redhat-ods-applications
     opendatahub.io/hardware-profile-name: nvidia-gpu-serving
     opendatahub.io/model-type: generative
+    opendatahub.io/connections: llama-31-8b-secret
   name: redhataillama-31-8b-instruct
   labels:
     opendatahub.io/dashboard: 'true'
