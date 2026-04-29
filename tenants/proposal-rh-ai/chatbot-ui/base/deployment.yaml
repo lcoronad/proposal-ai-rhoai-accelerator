@@ -46,7 +46,13 @@ spec:
               value: 'ocp_rh_vector_db'
             - name: OCP_TOOLGROUP_ID
               value: 'ocp::proposal'
-          ports:
+            - name: MCP_SERVER_OCP_URL
+              value: 'http://ocp-agent-service.proposal-rh-ai.svc.cluster.local:7860/gradio_api/mcp/sse'
+            - name: AGENT_INSTRUCTIONS
+              valueFrom:
+                configMapKeyRef:
+                  name: chatbot-ui-config
+                  key: AGENT_INSTRUCTIONS
             - containerPort: 7861
               protocol: TCP
           imagePullPolicy: Always

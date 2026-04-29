@@ -284,6 +284,10 @@ registered_resources:
     mcp_endpoint:
       uri: ${env.MCP_SERVER_OCP_URL:http://192.168.68.122:7860/gradio_api/mcp/sse}
 vector_stores:
+  default_provider_id: milvus
+  default_embedding_model:
+    provider_id: sentence-transformers
+    model_id: nomic-ai/nomic-embed-text-v1.5
   annotation_prompt_params:
     enable_annotations: true
     annotation_instruction_template: "Cite sources immediately at the end of sentences using <|file-id|> format."
