@@ -10,6 +10,6 @@ spec:
     protocol: TCP
     targetPort: 5432
   selector:
-    name: postgresql-llama-stack
+    app: postgresql-llama-stack
   sessionAffinity: None
   type: ClusterIP
