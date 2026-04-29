@@ -33,7 +33,7 @@ spec:
             secretKeyRef:
               key: database-name
               name: postgresql-llama-stack
-        image: ' '
+        image: 'image-registry.openshift-image-registry.svc:5000/openshift/postgresql:15-el8'
         imagePullPolicy: IfNotPresent
         livenessProbe:
           exec:
