@@ -53,6 +53,7 @@ spec:
                 configMapKeyRef:
                   name: chatbot-ui-config
                   key: AGENT_INSTRUCTIONS
+          ports:
             - containerPort: 7861
               protocol: TCP
           imagePullPolicy: Always
