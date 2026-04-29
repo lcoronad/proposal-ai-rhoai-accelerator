@@ -34,9 +34,8 @@ spec:
         - name: VLLM_API_TOKEN
           valueFrom:
             secretKeyRef:
-              name: llama-stack-token
+              name: llama-stack-inference-model-secret
               key: VLLM_API_TOKEN
-        # --- Remote Milvus configuration from secret ---
         - name: MILVUS_ENDPOINT
           valueFrom:
             secretKeyRef:
