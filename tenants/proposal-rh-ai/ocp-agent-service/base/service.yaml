@@ -2,7 +2,6 @@ kind: Service
 apiVersion: v1
 metadata:
   name: ocp-agent-service
-  namespace: proposal-rh-ai
 spec:
   ports:
     - name: http

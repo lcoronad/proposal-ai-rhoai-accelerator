@@ -2,7 +2,6 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: standard-workbench
-  namespace: proposal-rh-ai
 spec:
   accessModes:
     - ReadWriteOnce

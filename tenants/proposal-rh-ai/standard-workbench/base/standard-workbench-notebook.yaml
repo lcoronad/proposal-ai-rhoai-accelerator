@@ -12,7 +12,6 @@ metadata:
     notebooks.opendatahub.io/last-image-selection: "s2i-generic-data-science-notebook:2025.2"
     argocd.argoproj.io/sync-options: ServerSideApply=true
   name: standard-workbench
-  namespace: proposal-rh-ai
   labels:
     app: standard-workbench
     opendatahub.io/dashboard: 'true'

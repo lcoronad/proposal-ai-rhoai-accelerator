@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: etcd-deployment
-  namespace: proposal-rh-ai
   labels:
     app: etcd
 spec:

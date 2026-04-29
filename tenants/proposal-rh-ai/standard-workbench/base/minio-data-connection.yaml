@@ -2,7 +2,6 @@ kind: Secret
 apiVersion: v1
 metadata:
   name: minio-data-connection
-  namespace: proposal-rh-ai
   labels:
     opendatahub.io/dashboard: 'true'
     opendatahub.io/managed: 'true'

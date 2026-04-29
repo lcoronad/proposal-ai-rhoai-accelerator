@@ -1,0 +1,79 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: postgresql-llama-stack
+spec:
+  replicas: 1
+  selector:
+    name: postgresql-llama-stack
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: postgresql-llama-stack
+    spec:
+      containers:
+      - env:
+        - name: POSTGRESQL_USER
+          valueFrom:
+            secretKeyRef:
+              key: database-user
+              name: postgresql-llama-stack
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: database-password
+              name: postgresql-llama-stack
+        - name: POSTGRESQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              key: database-name
+              name: postgresql-llama-stack
+        image: ' '
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          exec:
+            command:
+            - /usr/libexec/check-container
+            - --live
+          initialDelaySeconds: 120
+          timeoutSeconds: 10
+        name: postgresql
+        ports:
+        - containerPort: 5432
+          protocol: TCP
+        readinessProbe:
+          exec:
+            command:
+            - /usr/libexec/check-container
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+        resources:
+          limits:
+            memory: 1024Mi
+        securityContext:
+          capabilities: {}
+          privileged: false
+        terminationMessagePath: /dev/termination-log
+        volumeMounts:
+        - mountPath: /var/lib/pgsql/data
+          name: postgresql-llama-stack-data
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      volumes:
+      - name: postgresql-llama-stack-data
+        persistentVolumeClaim:
+          claimName: postgresql-llama-stack
+  triggers:
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - postgresql
+      from:
+        kind: ImageStreamTag
+        name: postgresql:15-el18
+        namespace: openshift
+      lastTriggeredImage: ""
+    type: ImageChange
+  - type: ConfigChange

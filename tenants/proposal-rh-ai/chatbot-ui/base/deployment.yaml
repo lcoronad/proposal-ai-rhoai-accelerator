@@ -2,7 +2,6 @@
 apiVersion: apps/v1
 metadata:
   name: chatbot-ui
-  namespace: proposal-rh-ai
 spec:
   replicas: 1
   selector:

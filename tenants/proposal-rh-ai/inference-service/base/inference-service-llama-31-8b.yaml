@@ -13,7 +13,6 @@ metadata:
     opendatahub.io/connections: secret-vfvoe6
     opendatahub.io/model-type: generative
   name: redhataillama-31-8b-instruct
-  namespace: proposal-rh-ai
   labels:
     opendatahub.io/dashboard: 'true'
     opendatahub.io/genai-asset: 'true'

@@ -2,7 +2,6 @@ kind: Service
 apiVersion: v1
 metadata:
   name: chatbot-ui
-  namespace: proposal-rh-ai
 spec:
   ports:
     - name: http

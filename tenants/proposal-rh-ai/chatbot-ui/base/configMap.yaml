@@ -2,7 +2,6 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: chatbot-ui-config
-  namespace: proposal-rh-ai
 data:
   AGENT_INSTRUCTIONS: |
     You are a helpful assistant.

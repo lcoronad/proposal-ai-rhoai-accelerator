@@ -7,12 +7,15 @@ resources:
   - llama-stack-inference-model-secret.yaml
   - llama-stack-milvus-remote.yaml
   - llama-stack-milvus-secret.yaml
+  - llama-stack-db-secret.yaml
   - milvus-pvc.yaml
   - milvus-secret.yaml
   - milvus-service.yaml
   - milvus-standalone-deployment.yaml
-  - llama-stack-bd-secret.yaml
-  #- inferenceService.yaml
+  - postgresql-deployment.yaml
+  - postgresql-service.yaml
+  - postgresql-pvc.yaml
+  - postgresql-secret.yaml
 
 configMapGenerator:
   - name: llama-stack-config
