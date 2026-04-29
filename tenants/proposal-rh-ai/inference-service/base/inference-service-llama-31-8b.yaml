@@ -10,7 +10,6 @@ metadata:
     serving.kserve.io/deploymentMode: RawDeployment
     opendatahub.io/hardware-profile-namespace: redhat-ods-applications
     opendatahub.io/hardware-profile-name: nvidia-gpu-serving
-    opendatahub.io/connections: secret-vfvoe6
     opendatahub.io/model-type: generative
   name: redhataillama-31-8b-instruct
   labels:
