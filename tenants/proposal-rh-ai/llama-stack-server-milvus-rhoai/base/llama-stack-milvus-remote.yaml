@@ -83,7 +83,7 @@ spec:
         - name: EMBEDDING_PROVIDER
           value: "sentence-transformers"
         - name: HF_TRUST_REMOTE_CODE
-          value: "1"
+          value: "True"
         - name: MCP_SERVER_OCP_URL
           value: http://ocp-agent-service.proposal-rh-ai.svc.cluster.local:7860/gradio_api/mcp/sse
       name: llama-stack
