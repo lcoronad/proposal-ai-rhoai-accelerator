@@ -7,7 +7,7 @@ resources:
   - llama-stack-inference-model-secret.yaml
   - llama-stack-milvus-remote.yaml
   - llama-stack-milvus-secret.yaml
-  - llama-stack-db-secret.yaml
+  - llama-stack-bd-secret.yaml
   - milvus-pvc.yaml
   - milvus-secret.yaml
   - milvus-service.yaml
