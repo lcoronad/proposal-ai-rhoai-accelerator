@@ -34,7 +34,8 @@ providers:
       region_name: ${env.AWS_DEFAULT_REGION:=us-east-2}
   - provider_id: ${env.ENABLE_SENTENCE_TRANSFORMERS:+sentence-transformers}
     provider_type: inline::sentence-transformers
-    config: {}
+    config:
+      trust_remote_code: ${env.HF_TRUST_REMOTE_CODE:=0}
   - provider_id: ${env.WATSONX_API_KEY:+watsonx}
     provider_type: remote::watsonx
     config:
