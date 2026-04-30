@@ -16,6 +16,7 @@ resources:
   - postgresql-service.yaml
   - postgresql-pvc.yaml
   - postgresql-secret.yaml
+  - llama-stack-network-policy.yaml
 
 configMapGenerator:
   - name: llama-stack-config
