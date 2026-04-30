@@ -7,3 +7,4 @@ resources:
   - route.yaml
   - serviceAccount.yaml
   - configMap.yaml
+  - allow-ingress-network-policy.yaml
