@@ -7,3 +7,6 @@ resources:
   - minio-data-connection.yaml
   - standard-workbench-notebook.yaml
   - standard-workbench-sa.yaml
+  - standard-workbench-kube-rbac-proxy-service.yaml
+  - standard-workbench-rbac-configmap.yaml
+  - standard-workbench-service.yaml
