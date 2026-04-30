@@ -8,7 +8,7 @@ metadata:
     openshift.io/display-name: standard-workbench
     notebooks.opendatahub.io/last-image-version-git-commit-selection: d3137ca
     notebooks.opendatahub.io/last-image-selection: "s2i-generic-data-science-notebook:2025.2"
-    opendatahub.io/hardware-profile-name: nvidia-gpu-notebooks
+    opendatahub.io/hardware-profile-name: default-profile
     opendatahub.io/hardware-profile-resource-version: '43864'
     opendatahub.io/hardware-profile-namespace: redhat-ods-applications
     opendatahub.io/connections: ''
