@@ -14,7 +14,6 @@ spec:
     spec:
       containers:
         - name: chatbot-ui
-          serviceAccountName: chatbot-ui
           resources:
             requests:
               cpu: 100m

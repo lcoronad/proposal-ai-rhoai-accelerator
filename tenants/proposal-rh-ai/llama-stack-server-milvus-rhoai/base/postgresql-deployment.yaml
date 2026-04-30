@@ -54,7 +54,7 @@ spec:
           timeoutSeconds: 1
         resources:
           limits:
-            memory: 1024Mi
+            memory: 1Gi
         securityContext:
           capabilities: {}
           privileged: false
@@ -68,15 +68,3 @@ spec:
       - name: postgresql-llama-stack-data
         persistentVolumeClaim:
           claimName: postgresql-llama-stack
-  triggers:
-  - imageChangeParams:
-      automatic: true
-      containerNames:
-      - postgresql
-      from:
-        kind: ImageStreamTag
-        name: postgresql:15-el18
-        namespace: openshift
-      lastTriggeredImage: ""
-    type: ImageChange
-  - type: ConfigChange
