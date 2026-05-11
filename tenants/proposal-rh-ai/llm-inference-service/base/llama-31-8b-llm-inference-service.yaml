@@ -41,6 +41,15 @@ spec:
             cpu: '4'
             memory: 8Gi
             nvidia.com/gpu: '1'
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+            scheme: HTTPS
+          initialDelaySeconds: 180
+          periodSeconds: 60
+          timeoutSeconds: 60
+          failureThreshold: 5
     tolerations:
       - effect: NoSchedule
         key: nvidia-gpu-only
