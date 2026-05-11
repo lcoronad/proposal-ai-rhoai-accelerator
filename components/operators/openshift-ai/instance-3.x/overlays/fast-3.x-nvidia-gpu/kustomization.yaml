@@ -18,3 +18,5 @@ components:
   - ../../components/idle-notebook-culling
   - ../../components/inference-gateway
   - ../../components/rhoai-auth
+  - ../../components/dashboard-genAIstudio
+  - ../../components/components-distributed-workloads

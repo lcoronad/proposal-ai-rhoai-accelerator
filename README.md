@@ -1,12 +1,16 @@
-# Red Hat AI Accelerator
+# Proposal Red Hat AI
 
-Welcome to the AI Accelerator project source code. This project is designed to initialize an OpenShift cluster with a recommended set of operators and components that aid with training, deploying, serving and monitoring Machine Learning models.
+Welcome to the helper project for AI Red Hat Proposal helper . This project is designed to initialize an OpenShift cluster with a recommended set of operators and components that aid with training, deploying, serving and monitoring Machine Learning models.
 
 This repo is intended to provide a core set of OpenShift features that would commonly be used for a Data Science environment, but can also be highly customized for specific scenarios. When starting out we recommend making a copy or a fork of this project on your Git based instance, since it utilizes the process of automating IT infrastructure using infrastructure as code and software development best practices such as Git, code review, and CI/CD - known as GitOps.
 
 Once the initial components are deployed, several ArgoCD Application objects are created which are then used to install and manage the install of the operators on the cluster.
 
 ![AI Accelerator Overview](documentation/diagrams/AI_Accelerator.drawio.png)
+
+Like part of this components this repo install three (3) applications to simulate a chatbot to answer questions of Red Hat sale proposals, using Llama Stack Server like framework to use Models LLM, MCP tool and RAG tool. This project include a Notebook to ingest data into RAG.
+
+![RH Proposal Overview](documentation/diagrams/RH_Proposal_AI.png)
 
 ## Additional Documentation and Info
 
@@ -35,8 +39,6 @@ Once the initial components are deployed, several ArgoCD Application objects are
 
 ### Example Applications
 
-Looking for example applications to deploy on top of OpenShift AI?
-
-You can find example workloads here:
-
-[AI Accelerator Examples](http://github.com/redhat-ai-services/ai-accelerator-examples)
+* [Chatbot Proposal AI](https://github.com/lcoronad/chatbot-proposal-ai.git)
+* [OCP Agent Service MCP](https://github.com/lcoronad/ocp-agent-service-proposal-ai.git)
+* [Ingest Data RAG](https://github.com/lcoronad/ingest-data-proposal-ai.git)
