@@ -19,7 +19,7 @@ resources:
   - llama-stack-network-policy.yaml
 
 configMapGenerator:
-  - name: llama-stack-config
+  - name: custom-llama-stack-config
     options:
       disableNameSuffixHash: true
     namespace: proposal-rh-ai

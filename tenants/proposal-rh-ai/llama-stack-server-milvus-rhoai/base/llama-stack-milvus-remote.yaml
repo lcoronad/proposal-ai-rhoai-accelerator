@@ -89,4 +89,4 @@ spec:
     distribution:
       name: rh-dev
     userConfig:
-      configMapName: llama-stack-config
+      configMapName: custom-llama-stack-config
