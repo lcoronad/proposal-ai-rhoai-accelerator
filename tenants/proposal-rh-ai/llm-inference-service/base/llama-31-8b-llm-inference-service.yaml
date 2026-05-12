@@ -8,24 +8,14 @@ metadata:
     opendatahub.io/hardware-profile-namespace: redhat-ods-applications
     opendatahub.io/hardware-profile-name: nvidia-gpu-serving
 spec:
-  replicas: 2
+  replicas: 1
   model:
     uri: 'oci://registry.redhat.io/rhelai1/modelcar-llama-3-1-8b-instruct:1.5'
     name: llama-3-1-8b-instruct
   router:
-    scheduler:
-      template:
-        containers:
-          - name: main
-            args:
-              - '--pool-group'
-              - 'inference.networking.x-k8s.io'
-              - '--pool-name'
-              - '{{ .ObjectMeta.Name }}-inference-pool'
-              - '--pool-namespace'
-              - '{{ .ObjectMeta.Namespace }}'
-              - '--zap-encoder'
-              - 'json'
+    route: {}
+    gateway: {}
+    scheduler: {}
   template:
     containers:
       - name: main
