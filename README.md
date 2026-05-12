@@ -42,3 +42,7 @@ Like part of this components this repo install three (3) applications to simulat
 * [Chatbot Proposal AI](https://github.com/lcoronad/chatbot-proposal-ai.git)
 * [OCP Agent Service MCP](https://github.com/lcoronad/ocp-agent-service-proposal-ai.git)
 * [Ingest Data RAG](https://github.com/lcoronad/ingest-data-proposal-ai.git)
+
+### Steps to use RH Proposal AI
+
+

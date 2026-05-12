@@ -13,14 +13,14 @@ spec:
         app: ocp-agent-service
     spec:
       containers:
-        - resources:
+        - name: ocp-agent-service
+          resources:
             requests:
               cpu: 100m
               memory: 512Mi
             limits:
               cpu: 500m
               memory: 1Gi
-          name: ocp-agent-service
           env:
             - name: ROOT_LOG_LEVEL
               value: 'INFO'
@@ -42,12 +42,27 @@ spec:
               value: 'False'
             - name: VECTOR_DB_NAME_SKUS
               value: 'skus_rh_vector_db'
+            - name: AGENT_INSTRUCTIONS_OCP_INFRA
+              valueFrom:
+                configMapKeyRef:
+                  name: ocp-agent-service-config
+                  key: AGENT_INSTRUCTIONS_OCP_INFRA
+            - name: AGENT_INSTRUCTIONS_OCP_SIZING
+              valueFrom:
+                configMapKeyRef:
+                  name: ocp-agent-service-config
+                  key: AGENT_INSTRUCTIONS_OCP_SIZING
+            - name: AGENT_INSTRUCTIONS_OCP_SKUS
+              valueFrom:
+                configMapKeyRef:
+                  name: ocp-agent-service-config
+                  key: AGENT_INSTRUCTIONS_OCP_SKUS
           ports:
             - containerPort: 7860
               protocol: TCP
           imagePullPolicy: Always
           terminationMessagePolicy: File
-          image: 'quay.io/lcoronad/ocp-agent-service-proposal-ai:1.1.1'
+          image: 'quay.io/lcoronad/ocp-agent-service-proposal-ai:1.1.2'
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
