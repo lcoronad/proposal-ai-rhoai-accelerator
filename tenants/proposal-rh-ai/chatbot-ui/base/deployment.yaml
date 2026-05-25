@@ -29,7 +29,7 @@ spec:
             - name: MODEL_ID
               value: 'vllm-inference/redhataillama-31-8b-instruct'
             - name: LLAMA_STACK_BASE_URL
-              value: 'http://llama-stack-milvus-remote-service.proposal-rh-ai.svc.cluster.local:8321'
+              value: 'http://llama-stack-milvus-remote-service.proposal-rh-ai.svc.cluster.local:8321/v1'
             - name: TEMPERATURE
               value: '0.95'
             - name: TOP_P
