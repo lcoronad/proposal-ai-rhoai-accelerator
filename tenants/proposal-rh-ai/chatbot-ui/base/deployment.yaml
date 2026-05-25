@@ -22,8 +22,8 @@ spec:
               cpu: 500m
               memory: 512Mi
           env:
-            - name: ROOT_LOG_LEVEL
-              value: 'INFO'
+            - name: API_KEY
+              value: 'fake-key'
             - name: APP_LOG_LEVEL
               value: 'DEBUG'
             - name: MODEL_ID
@@ -36,27 +36,40 @@ spec:
               value: '0.95'
             - name: MAX_TOKENS
               value: '4096'
-            - name: STREAM
-              value: 'True'
-            - name: MAX_INFER_ITERS
-              value: '10'
+            - name: EMBEDDING_MODEL
+              value: 'sentence-transformers/ibm-granite/granite-embedding-125m-english'
+            - name: MILVUS_HOST
+              value: 'milvus-service.proposal-rh-ai.svc.cluster.local'
+            - name: MILVUS_PORT
+              value: '19530'
             - name: VECTOR_DB_NAME_OCP
-              value: 'ocp_rh_vector_db'
-            - name: OCP_TOOLGROUP_ID
-              value: 'ocp::proposal'
-            - name: MCP_SERVER_OCP_URL
-              value: 'http://ocp-agent-service.proposal-rh-ai.svc.cluster.local:7860/gradio_api/mcp/sse'
-            - name: AGENT_INSTRUCTIONS
+              value: 'skus_rh_vector_db'
+            - name: COORDINATOR_AGENT_INSTRUCTIONS
               valueFrom:
                 configMapKeyRef:
                   name: chatbot-ui-config
-                  key: AGENT_INSTRUCTIONS
+                  key: COORDINATOR_AGENT_INSTRUCTIONS
+            - name: COORDINATOR_AGENT_DELEGATOR_PROMPT
+              valueFrom:
+                configMapKeyRef:
+                  name: chatbot-ui-config
+                  key: COORDINATOR_AGENT_DELEGATOR_PROMPT
+            - name: SKUS_AGENT_INSTRUCTIONS
+              valueFrom:
+                configMapKeyRef:
+                  name: chatbot-ui-config
+                  key: SKUS_AGENT_INSTRUCTIONS
+            - name: INFRAESTRUCTURE_AGENT_INSTRUCTIONS
+              valueFrom:
+                configMapKeyRef:
+                  name: chatbot-ui-config
+                  key: INFRAESTRUCTURE_AGENT_INSTRUCTIONS
           ports:
             - containerPort: 7861
               protocol: TCP
           imagePullPolicy: Always
           terminationMessagePolicy: File
-          image: 'quay.io/lcoronad/chatbot-proposal-ai:1.1.1'
+          image: 'quay.io/lcoronad/chatbot-proposal-ai:1.1.2'
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst

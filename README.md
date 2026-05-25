@@ -46,3 +46,9 @@ Like part of this components this repo install three (3) applications to simulat
 ### Steps to use RH Proposal AI
 
 
+curl -v https://llama-3-1-8b-instruct-distributed-kserve-workload-svc.proposal-rh-ai.svc.cluster.local/v1/completions \
+    -H "Content-Type: application/json" \
+    -d '{
+        "model": "llama-3-1-8b-instruct",
+        "prompt": "San Francisco is a"
+    }'
