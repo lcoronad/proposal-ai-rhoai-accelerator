@@ -39,7 +39,7 @@ spec:
             - name: EMBEDDING_MODEL
               value: 'sentence-transformers/ibm-granite/granite-embedding-125m-english'
             - name: MILVUS_HOST
-              value: 'milvus-service.proposal-rh-ai.svc.cluster.local'
+              value: 'http://milvus-service.proposal-rh-ai.svc.cluster.local'
             - name: MILVUS_PORT
               value: '19530'
             - name: VECTOR_DB_NAME_OCP
@@ -69,7 +69,7 @@ spec:
               protocol: TCP
           imagePullPolicy: Always
           terminationMessagePolicy: File
-          image: 'quay.io/lcoronad/chatbot-proposal-ai:1.1.5'
+          image: 'quay.io/lcoronad/chatbot-proposal-ai:1.1.6'
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
