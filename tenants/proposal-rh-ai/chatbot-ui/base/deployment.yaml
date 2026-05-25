@@ -69,7 +69,7 @@ spec:
               protocol: TCP
           imagePullPolicy: Always
           terminationMessagePolicy: File
-          image: 'quay.io/lcoronad/chatbot-proposal-ai:1.1.2'
+          image: 'quay.io/lcoronad/chatbot-proposal-ai:1.1.3'
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
