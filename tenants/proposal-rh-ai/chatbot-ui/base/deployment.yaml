@@ -29,7 +29,7 @@ spec:
             - name: MODEL_ID
               value: 'vllm-inference/redhataillama-31-8b-instruct'
             - name: LLAMA_STACK_BASE_URL
-              value: 'http://llama-stack-milvus-remote-service.proposal-rh-ai.svc.cluster.local:8321/v1'
+              value: 'http://llama-stack-milvus-remote-service.proposal-rh-ai.svc.cluster.local:8321'
             - name: TEMPERATURE
               value: '0.95'
             - name: TOP_P
@@ -69,7 +69,7 @@ spec:
               protocol: TCP
           imagePullPolicy: Always
           terminationMessagePolicy: File
-          image: 'quay.io/lcoronad/chatbot-proposal-ai:1.1.14'
+          image: 'quay.io/lcoronad/chatbot-proposal-ai:1.1.15'
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
