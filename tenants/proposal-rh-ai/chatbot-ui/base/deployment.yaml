@@ -43,7 +43,7 @@ spec:
             - name: MILVUS_PORT
               value: '19530'
             - name: VECTOR_DB_NAME_OCP
-              value: 'vs_ef09b0c1_c909_4554_9986_7a3336202d3f'
+              value: 'skus_rh_vector_db'
             - name: COORDINATOR_AGENT_INSTRUCTIONS
               valueFrom:
                 configMapKeyRef:
