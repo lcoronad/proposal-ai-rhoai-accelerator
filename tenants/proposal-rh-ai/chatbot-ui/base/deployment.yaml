@@ -32,9 +32,15 @@ spec:
               value: 'http://llama-stack-milvus-remote-service.proposal-rh-ai.svc.cluster.local:8321'
             - name: TEMPERATURE
               value: '0.95'
+            - name: SUPERVISOR_TEMPERATURE
+              value: '0.1'
             - name: TOP_P
               value: '0.95'
-            - name: MAX_TOKENS
+            - name: MAX_ROUTING_ITERATIONS
+              value: '10'
+            - name: GRAPH_RECURSION_LIMIT
+              value: '15'
+            - name: MAX_COMPLETION_TOKENS
               value: '4096'
             - name: EMBEDDING_MODEL
               value: 'sentence-transformers/ibm-granite/granite-embedding-125m-english'
@@ -64,12 +70,17 @@ spec:
                 configMapKeyRef:
                   name: chatbot-ui-config
                   key: INFRAESTRUCTURE_AGENT_INSTRUCTIONS
+            - name: FINALIZE_AGENT_INSTRUCTIONS
+              valueFrom:
+                configMapKeyRef:
+                  name: chatbot-ui-config
+                  key: FINALIZE_AGENT_INSTRUCTIONS
           ports:
             - containerPort: 7861
               protocol: TCP
           imagePullPolicy: Always
           terminationMessagePolicy: File
-          image: 'quay.io/lcoronad/chatbot-proposal-ai:1.1.21'
+          image: 'quay.io/lcoronad/chatbot-proposal-ai:1.1.22'
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
