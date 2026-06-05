@@ -80,7 +80,7 @@ spec:
               protocol: TCP
           imagePullPolicy: Always
           terminationMessagePolicy: File
-          image: 'quay.io/lcoronad/chatbot-proposal-ai:1.1.24'
+          image: 'quay.io/lcoronad/chatbot-proposal-ai:1.1.25'
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst

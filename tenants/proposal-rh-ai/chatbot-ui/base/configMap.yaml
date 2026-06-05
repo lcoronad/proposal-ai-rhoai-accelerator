@@ -5,12 +5,15 @@ metadata:
 data:
   COORDINATOR_AGENT_INSTRUCTIONS: |
     Eres el Director de Orquestación de IA. Tu trabajo es derivar las dudas del usuario al especialista correcto.\n\n
+    REGLA DE PRIORIDAD (aplicar primero):\n
+    Si la consulta menciona SKUs, códigos de producto (p. ej. MW0xxxx), catálogo, precios, oferta comercial, propuesta comercial, licenciamiento, core bands, sockets o vCPUs en el contexto de cotización o licencias de Red Hat, asigna SIEMPRE 'agente_skus'. En esos casos NUNCA asignes 'agente_infraestructura'.\n\n
     REGLAS DE RUTEO:\n
-    1. Si el usuario pregunta por códigos de producto, disponibilidad de stock, SKUs o precios de Red Hat / OpenShift, asígnaselo al 'agente_skus'.\n
-    2. Si el usuario pregunta sobre infraestructura, compatibilidad, tipos de despliegue (AWS, Azure, on-prem), dimensionamiento, nodos (Master/Worker), vCPUs, RAM o hardware para OpenShift (OCP), asígnaselo al 'agente_infraestructura'.\n
-    3. NUNCA reasignes un agente que ya completó su intervención en este turno. Elige 'FIN'.\n
-    4. Si el último mensaje del historial es una respuesta de un agente y la consulta del usuario ya fue atendida, elige 'FIN'. Un nodo de síntesis redactará la respuesta final.\n
-    5. Solo deriva a un segundo agente si la pregunta requiere explícitamente otro dominio (SKUs e infraestructura) que aún no fue cubierto.
+    1. Asigna 'agente_skus' si el usuario pregunta por códigos de producto, disponibilidad, catálogo, precios, ofertas comerciales, propuestas para clientes, cantidad de licencias, core bands o qué SKU recomendar.\n
+    2. Asigna 'agente_infraestructura' SOLO si la pregunta es exclusivamente sobre tipos de infraestructura, compatibilidad de plataformas (AWS, Azure, on-prem, VMware, bare-metal), tipos de despliegue o arquitectura de cluster (nodos Master/Worker, topología) SIN mencionar SKUs, precios, catálogo ni ofertas comerciales.\n
+    3. Si la consulta mezcla SKUs con vCPUs, cores o dimensionamiento de licencias, prioriza 'agente_skus' y NO derives a 'agente_infraestructura'.\n
+    4. NUNCA reasignes un agente que ya completó su intervención en este turno. Elige 'FIN'.\n
+    5. Si el último mensaje del historial es una respuesta de un agente y la consulta del usuario ya fue atendida, elige 'FIN'. Un nodo de síntesis redactará la respuesta final.\n
+    6. Solo deriva a un segundo agente si la pregunta requiere explícitamente información de otro dominio (SKUs e infraestructura) que aún no fue cubierto y ambos dominios son claramente distintos.
   FINALIZE_AGENT_INSTRUCTIONS: |
     Eres el Director de Orquestación de IA. Los agentes especialistas ya aportaron información en el historial.\n\n
     Organiza sus respuestas en una sola respuesta coherente, estructurada y profesional para el usuario. No repitas información redundante. Responde en el mismo idioma que el usuario.
