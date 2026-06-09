@@ -1,0 +1,52 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  annotations:
+    security.opendatahub.io/enable-auth: 'false'
+    opendatahub.io/hardware-profile-resource-version: '43865'
+    opendatahub.io/genai-use-case: 'chat, natural language processing'
+    openshift.io/description: ''
+    openshift.io/display-name: RedHatAI/Qwen-3-8B
+    serving.kserve.io/deploymentMode: RawDeployment
+    opendatahub.io/hardware-profile-namespace: redhat-ods-applications
+    opendatahub.io/hardware-profile-name: nvidia-gpu-serving
+    opendatahub.io/model-type: generative
+    opendatahub.io/connections: qwen-3-8b-secret
+  name: redhatqwen-3-8b
+  labels:
+    opendatahub.io/dashboard: 'true'
+    opendatahub.io/genai-asset: 'true'
+spec:
+  predictor:
+    automountServiceAccountToken: false
+    deploymentStrategy:
+      type: RollingUpdate
+    maxReplicas: 1
+    minReplicas: 1
+    model:
+      args:
+        - '--max-model-len=20000'
+        - '--gpu-memory-utilization=0.95'
+        - '--enable-auto-tool-choice'
+        - '--tool-call-parser=hermes'
+      modelFormat:
+        name: vLLM
+      name: ''
+      resources:
+        limits:
+          cpu: '4'
+          memory: 12Gi
+          nvidia.com/gpu: '1'
+        requests:
+          cpu: '4'
+          memory: 8Gi
+          nvidia.com/gpu: '1'
+      runtime: redhatqwen-3-8b
+      storageUri: 'oci://registry.redhat.io/rhelai1/modelcar-qwen3-8b-fp8-dynamic:latest'
+    tolerations:
+      - effect: NoSchedule
+        key: nvidia-gpu-only
+        operator: Exists
+      - effect: NoSchedule
+        key: nvidia.com/gpu
+        operator: Exists
