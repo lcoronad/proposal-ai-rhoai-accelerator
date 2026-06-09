@@ -11,7 +11,7 @@ metadata:
     opendatahub.io/hardware-profile-namespace: redhat-ods-applications
     opendatahub.io/hardware-profile-name: nvidia-gpu-serving
     opendatahub.io/model-type: generative
-    opendatahub.io/connections: qwen-3-8b-secret
+    opendatahub.io/connections: qwen3-8b-secret
   name: redhatqwen-3-8b
   labels:
     opendatahub.io/dashboard: 'true'
