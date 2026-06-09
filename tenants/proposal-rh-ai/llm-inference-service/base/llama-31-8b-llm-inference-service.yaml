@@ -8,7 +8,7 @@ metadata:
     opendatahub.io/hardware-profile-namespace: redhat-ods-applications
     opendatahub.io/hardware-profile-name: nvidia-gpu-serving
 spec:
-  replicas: 1
+  replicas: 0
   model:
     uri: 'oci://registry.redhat.io/rhelai1/modelcar-llama-3-1-8b-instruct:1.5'
     name: llama-3-1-8b-instruct

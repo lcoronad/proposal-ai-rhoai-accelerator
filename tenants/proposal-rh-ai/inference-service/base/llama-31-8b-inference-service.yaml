@@ -21,8 +21,8 @@ spec:
     automountServiceAccountToken: false
     deploymentStrategy:
       type: RollingUpdate
-    maxReplicas: 1
-    minReplicas: 1
+    maxReplicas: 0
+    minReplicas: 0
     model:
       args:
         - '--dtype=half'
