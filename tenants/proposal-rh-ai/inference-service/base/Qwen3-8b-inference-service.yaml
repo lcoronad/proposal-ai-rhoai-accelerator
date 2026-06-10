@@ -28,7 +28,8 @@ spec:
         - '--max-model-len=20000'
         - '--gpu-memory-utilization=0.95'
         - '--enable-auto-tool-choice'
-        - '--tool-call-parser=hermes'
+        - '--tool-call-parser=qwen3_coder'
+        - '--tensor-parallel-size=2'
       modelFormat:
         name: vLLM
       name: ''
@@ -42,7 +43,7 @@ spec:
           memory: 8Gi
           nvidia.com/gpu: '1'
       runtime: redhatqwen-3-8b
-      storageUri: 'oci://registry.redhat.io/rhelai1/modelcar-qwen3-8b-fp8-dynamic:latest'
+      storageUri: 'oci://registry.redhat.io/rhelai1/modelcar-qwen3-coder-480b-a35b-instruct-fp8:1.5'
     tolerations:
       - effect: NoSchedule
         key: nvidia-gpu-only
