@@ -10,4 +10,4 @@ data:
         resource: notebooks
         apiGroup: kubeflow.org
         name: standard-workbench
-        namespace: proposal-rh-ai
+        namespace: triage-analysis-sast
