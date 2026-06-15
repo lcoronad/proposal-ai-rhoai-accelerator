@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - llama-stack-inference-model-secret.yaml
+  - llama-stack-milvus-remote.yaml
+  - llama-stack-milvus-secret.yaml
+  - llama-stack-bd-secret.yaml
+  - postgresql-deployment.yaml
+  - postgresql-service.yaml
+  - postgresql-pvc.yaml
+  - postgresql-secret.yaml
+  - llama-stack-network-policy.yaml
+
+configMapGenerator:
+  - name: custom-llama-stack-config
+    options:
+      disableNameSuffixHash: true
+    namespace: proposal-rh-ai
+    files:
+      - config.yaml=config.yaml

@@ -1,0 +1,13 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: standard-workbench-kube-rbac-proxy-config
+data:
+  config-file.yaml: |-
+    authorization:
+      resourceAttributes:
+        verb: get
+        resource: notebooks
+        apiGroup: kubeflow.org
+        name: standard-workbench
+        namespace: proposal-rh-ai

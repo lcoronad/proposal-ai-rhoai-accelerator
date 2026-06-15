@@ -1,6 +1,0 @@
-- op: replace
-  path: /spec/template/spec/containers/0/readinessProbe/httpGet/path
-  value: '/notebook/triage-analysis-sast/standard-workbench/api'
-- op: replace
-  path: /spec/template/spec/containers/0/livenessProbe/httpGet/path
-  value: '/notebook/triage-analysis-sast/standard-workbench/api'

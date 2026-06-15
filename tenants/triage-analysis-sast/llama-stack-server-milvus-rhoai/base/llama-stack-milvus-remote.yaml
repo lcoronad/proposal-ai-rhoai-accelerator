@@ -1,0 +1,92 @@
+apiVersion: llamastack.io/v1alpha1
+kind: LlamaStackDistribution
+metadata:
+  name: llama-stack-milvus-remote
+spec:
+  replicas: 1
+  server:
+    containerSpec:
+      resources:
+        requests:
+          cpu: "250m"
+          memory: "500Mi"
+        limits:
+          cpu: 8
+          memory: "12Gi"
+      env:
+        - name: INFERENCE_MODEL
+          valueFrom:
+            secretKeyRef:
+              name: llama-stack-inference-model-secret
+              key: INFERENCE_MODEL
+        - name: VLLM_MAX_TOKENS
+          value: "4096"
+        - name: VLLM_URL
+          valueFrom:
+            secretKeyRef:
+              name: llama-stack-inference-model-secret
+              key: VLLM_URL
+        - name: VLLM_TLS_VERIFY
+          valueFrom:
+            secretKeyRef:
+              name: llama-stack-inference-model-secret
+              key: VLLM_TLS_VERIFY
+        - name: VLLM_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: llama-stack-inference-model-secret
+              key: VLLM_API_TOKEN
+        - name: MILVUS_ENDPOINT
+          valueFrom:
+            secretKeyRef:
+              name: llama-stack-milvus-secret
+              key: MILVUS_ENDPOINT
+        - name: MILVUS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: llama-stack-milvus-secret
+              key: MILVUS_TOKEN
+        - name: MILVUS_CONSISTENCY_LEVEL
+          valueFrom:
+            secretKeyRef:
+              name: llama-stack-milvus-secret
+              key: MILVUS_CONSISTENCY_LEVEL
+        - name: POSTGRES_HOST
+          valueFrom:
+            secretKeyRef:
+              name: llama-stack-db-secret
+              key: POSTGRES_HOST
+        - name: POSTGRES_PORT
+          valueFrom:
+            secretKeyRef:
+              name: llama-stack-db-secret
+              key: POSTGRES_PORT
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: llama-stack-db-secret
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: llama-stack-db-secret
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: llama-stack-db-secret
+              key: POSTGRES_DB
+        - name: ENABLE_SENTENCE_TRANSFORMERS
+          value: "true"
+        - name: EMBEDDING_PROVIDER
+          value: "sentence-transformers"
+        - name: HF_TRUST_REMOTE_CODE
+          value: "true"
+        - name: MCP_SERVER_OCP_URL
+          value: http://ocp-agent-service.proposal-rh-ai.svc.cluster.local:7860/gradio_api/mcp/sse
+      name: llama-stack
+      port: 8321
+    distribution:
+      name: rh-dev
+    userConfig:
+      configMapName: custom-llama-stack-config

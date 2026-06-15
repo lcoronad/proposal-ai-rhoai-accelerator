@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: standard-workbench
+spec:
+  ipFamilies:
+    - IPv4
+  ports:
+    - name: http-notebook
+      protocol: TCP
+      port: 80
+      targetPort: 8888
+  internalTrafficPolicy: Cluster
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    statefulset: standard-workbench
