@@ -6,13 +6,13 @@ metadata:
     opendatahub.io/hardware-profile-resource-version: '43865'
     opendatahub.io/genai-use-case: 'chat, natural language processing'
     openshift.io/description: ''
-    openshift.io/display-name: RedHatAI/Qwen-3-8B
+    openshift.io/display-name: RedHatAI/Qwen-3-Coder-480B
     serving.kserve.io/deploymentMode: RawDeployment
     opendatahub.io/hardware-profile-namespace: redhat-ods-applications
     opendatahub.io/hardware-profile-name: nvidia-gpu-serving
     opendatahub.io/model-type: generative
-    opendatahub.io/connections: qwen3-8b-secret
-  name: redhatqwen-3-8b
+    opendatahub.io/connections: qwen3-coder-480b-secret
+  name: redhatqwen-3-coder-480b
   labels:
     opendatahub.io/dashboard: 'true'
     opendatahub.io/genai-asset: 'true'
@@ -42,7 +42,7 @@ spec:
           cpu: '4'
           memory: 8Gi
           nvidia.com/gpu: '1'
-      runtime: redhatqwen-3-8b
+      runtime: redhatqwen-3-coder-480b
       storageUri: 'oci://registry.redhat.io/rhelai1/modelcar-qwen3-coder-480b-a35b-instruct-fp8:1.5'
     tolerations:
       - effect: NoSchedule

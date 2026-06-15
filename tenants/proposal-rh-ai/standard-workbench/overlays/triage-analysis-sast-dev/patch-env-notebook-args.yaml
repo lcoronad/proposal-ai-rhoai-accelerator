@@ -1,0 +1,9 @@
+- op: replace
+  path: /spec/template/spec/containers/0/env/0/value
+  value: |-
+    --ServerApp.port=8888
+    --ServerApp.token=''
+    --ServerApp.password=''
+    --ServerApp.base_url=/notebook/triage-analysis-sast/standard-workbench
+    --ServerApp.quit_button=False
+    --ServerApp.tornado_settings={"user":"user1","hub_host":"","hub_prefix":"/projects/triage-analysis-sast"}

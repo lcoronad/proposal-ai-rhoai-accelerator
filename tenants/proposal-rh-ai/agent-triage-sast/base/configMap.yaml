@@ -1,0 +1,24 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: agent-triage-sast-config
+data:
+  QWEN_API_URL: http://redhatqwen-3-8b-predictor.proposal-rh-ai.svc.cluster.local/v1
+  QWEN_MODEL_NAME: redhatqwen-3-8b
+  QWEN_API_KEY: fake
+  TEMPERATURE: "0.1"
+  TOP_P: "0.95"
+  MAX_COMPLETION_TOKENS: "4096"
+  EMBEDDING_API_URL: https://llama-stack-server.apps.cluster-kncsv.kncsv.sandbox3483.opentlc.com/v1
+  EMBEDDINGS_MODEL_NAME: sentence-transformers/ibm-granite/granite-embedding-125m-english
+  EMBEDDING_API_KEY: fake
+  REDIS_URL: redis://localhost:6379
+  MILVUS_HOST: milvus-service
+  MILVUS_PORT: "19530"
+  MILVUS_COLLECTION_NAME: company_coding_standards
+  SLACK_TOOL_URL: http://cluster.local
+  GITHUB_TOOL_URL: http://cluster.local
+  TRIAGE_SYSTEM_PROMPT: |
+    Eres un agente DevSecOps experto en análisis de vulnerabilidades y remediación de código. Usa las herramientas MCP de GitHub y Slack, y consulta las normas internas de codificación cuando necesites validar lineamientos de la empresa.
+  SLACK_SYSTEM_PROMPT: |
+    Eres un asistente DevSecOps en Slack. Responde de forma clara y técnica. Usa las herramientas de Slack para publicar en el canal e hilo indicados. Consulta las normas internas de codificación cuando el desarrollador lo requiera.

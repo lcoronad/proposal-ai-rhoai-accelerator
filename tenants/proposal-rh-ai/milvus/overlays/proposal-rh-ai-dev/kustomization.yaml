@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: proposal-rh-ai
+namespace: proposal-rh-ai-dev
 
 resources:
-  - ../../base/llama-31-8b/
+  - ../../base/

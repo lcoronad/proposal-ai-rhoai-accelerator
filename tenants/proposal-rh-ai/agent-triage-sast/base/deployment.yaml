@@ -1,0 +1,46 @@
+﻿kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: agent-triage-sast
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agent-triage-sast
+  template:
+    metadata:
+      labels:
+        app: agent-triage-sast
+    spec:
+      containers:
+        - name: agent-triage-sast
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          envFrom:
+            - configMapRef:
+                name: agent-triage-sast-config
+          ports:
+            - containerPort: 7861
+              protocol: TCP
+          imagePullPolicy: Always
+          terminationMessagePolicy: File
+          image: 'quay.io/lcoronad/agent-triage-sast:1.0.0'
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+      serviceAccountName: agent-triage-sast
+      serviceAccount: agent-triage-sast
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

@@ -5,6 +5,3 @@ resources:
   - llama-31-8b-serving-runtime.yaml
   - llama-31-8b-secret.yaml
   - llama-31-8b-inference-service.yaml
-  - Qwen3-8b-serving-runtime.yaml
-  - Qwen3-8b-secret.yaml
-  - Qwen3-8b-inference-service.yaml

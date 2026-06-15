@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: agent-triage-sast
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 7861
+      targetPort: 7861
+  type: ClusterIP
+  selector:
+    app: agent-triage-sast
