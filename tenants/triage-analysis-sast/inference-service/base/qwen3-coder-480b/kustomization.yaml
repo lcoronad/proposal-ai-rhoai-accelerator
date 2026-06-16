@@ -5,3 +5,4 @@ resources:
   - qwen3-coder-480b-serving-runtime.yaml
   - qwen3-coder-480b-secret.yaml
   - qwen3-coder-480b-inference-service.yaml
+  - qwen3-coder-480b-pvc.yaml
