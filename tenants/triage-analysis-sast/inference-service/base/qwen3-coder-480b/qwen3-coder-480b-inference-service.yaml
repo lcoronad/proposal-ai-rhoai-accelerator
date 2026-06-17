@@ -32,6 +32,11 @@ spec:
         - '--tensor-parallel-size=2'
       modelFormat:
         name: vLLM
+      env:
+      - name: HF_HOME
+        value: /mnt/models/huggingface-cache
+      - name: TMPDIR
+        value: /mnt/models/tmp
       name: ''
       resources:
         limits:
