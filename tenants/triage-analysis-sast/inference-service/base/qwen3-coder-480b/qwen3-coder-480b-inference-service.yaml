@@ -43,13 +43,13 @@ spec:
           memory: 8Gi
           nvidia.com/gpu: '1'
       runtime: redhatqwen-3-coder-480b
-      volumeMounts:
-        - name: model-dir
-          mountPath: /mnt/models
-    volumes:
-      - name: model-dir
-        persistentVolumeClaim:
-          claimName: qwen3-coder-480b-pvc
+      #volumeMounts:
+      #  - name: model-dir
+      #    mountPath: /mnt/models
+    #volumes:
+    #  - name: model-dir
+    #    persistentVolumeClaim:
+    #      claimName: qwen3-coder-480b-pvc
     tolerations:
       - effect: NoSchedule
         key: nvidia-gpu-only
