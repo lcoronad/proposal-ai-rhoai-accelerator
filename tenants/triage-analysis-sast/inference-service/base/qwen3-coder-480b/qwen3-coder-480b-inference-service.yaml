@@ -46,10 +46,10 @@ spec:
       #volumeMounts:
       #  - name: model-dir
       #    mountPath: /mnt/models
-    #volumes:
-    #  - name: model-dir
-    #    persistentVolumeClaim:
-    #      claimName: qwen3-coder-480b-pvc
+    volumes:
+      - name: model-dir
+        persistentVolumeClaim:
+          claimName: qwen3-coder-480b-pvc
     tolerations:
       - effect: NoSchedule
         key: nvidia-gpu-only
