@@ -44,10 +44,10 @@ spec:
           nvidia.com/gpu: '1'
       runtime: redhatqwen-3-coder-480b
       volumeMounts:
-        - name: model-volume
-          mountPath: /models
+        - name: model-dir
+          mountPath: /mnt/models
     volumes:
-      - name: model-volume
+      - name: model-dir
         persistentVolumeClaim:
           claimName: qwen3-coder-480b-pvc
     tolerations:
