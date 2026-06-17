@@ -43,6 +43,7 @@ spec:
           memory: 8Gi
           nvidia.com/gpu: '1'
       runtime: redhatqwen-3-coder-480b
+      storageUri: 'oci://registry.redhat.io/rhelai1/modelcar-qwen3-coder-480b-a35b-instruct-fp8:1.5'
       #volumeMounts:
       #  - name: model-dir
       #    mountPath: /mnt/models
