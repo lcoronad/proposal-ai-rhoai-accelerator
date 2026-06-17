@@ -44,8 +44,11 @@ spec:
           nvidia.com/gpu: '1'
       runtime: redhatqwen-3-coder-480b
       storageUri: 'oci://registry.redhat.io/rhelai1/modelcar-qwen3-coder-480b-a35b-instruct-fp8:1.5'
+      volumeMounts:
+        - name: volume-models
+          mountPath: /models
     volumes:
-      - name: kserve-provision-location
+      - name: volume-models
         persistentVolumeClaim:
           claimName: qwen3-coder-480b-pvc
     tolerations:
