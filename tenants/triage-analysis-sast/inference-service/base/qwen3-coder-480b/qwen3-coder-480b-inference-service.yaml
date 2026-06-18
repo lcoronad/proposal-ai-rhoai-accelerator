@@ -51,7 +51,7 @@ spec:
       storageUri: 'oci://registry.redhat.io/rhelai1/modelcar-qwen3-coder-480b-a35b-instruct-fp8:1.5'
       volumeMounts:
         - name: volume-models
-          mountPath: /models
+          mountPath: /mnt/models
     volumes:
       - name: volume-models
         persistentVolumeClaim:
