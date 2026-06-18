@@ -28,20 +28,13 @@ spec:
         - vllm.entrypoints.openai.api_server
       env:
         - name: HF_HOME
-          value: /mnt/hf_home
+          value: /tmp/hf_home
       image: 'registry.redhat.io/rhaiis/vllm-cuda-rhel9@sha256:ec799bb5eeb7e25b4b25a8917ab5161da6b6f1ab830cbba61bba371cffb0c34d'
       name: kserve-container
       ports:
         - containerPort: 8080
           protocol: TCP
-      volumeMounts:
-        - mountPath: /mnt
-          name: models-volume
   multiModel: false
-  volumes:
-    - name: models-volume
-      persistentVolumeClaim:
-        claimName: qwen3-coder-480b-pvc
   supportedModelFormats:
     - autoSelect: true
       name: vLLM
