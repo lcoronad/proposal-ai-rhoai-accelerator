@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: agent-triage-sast-config
 data:
-  QWEN_API_URL: http://redhataillama-31-8b-instruct-predictor.triage-analysis-sast.svc.cluster.local/v1
+  QWEN_API_URL: http://redhataillama-31-8b-instruct-predictor.triage-analysis-sast.svc.cluster.local
   QWEN_MODEL_NAME: redhataillama-31-8b-instruct
   QWEN_API_KEY: fake
   TEMPERATURE: "0.1"
