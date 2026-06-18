@@ -1,0 +1,7 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: mcp-slack-config
+data:
+  SLACK_BOT_TOKEN: fake-token
+  SLACK_TEAM_ID: fake-team-id
