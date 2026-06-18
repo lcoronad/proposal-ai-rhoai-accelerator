@@ -21,8 +21,8 @@ spec:
     automountServiceAccountToken: false
     deploymentStrategy:
       type: RollingUpdate
-    maxReplicas: 1
-    minReplicas: 1
+    maxReplicas: 0
+    minReplicas: 0
     model:
       args:
         - '--max-model-len=20000'
@@ -32,11 +32,6 @@ spec:
         - '--tensor-parallel-size=2'
       modelFormat:
         name: vLLM
-      env:
-      - name: HF_HOME
-        value: /mnt/models/huggingface-cache
-      - name: TMPDIR
-        value: /mnt/models/tmp
       name: ''
       resources:
         limits:
