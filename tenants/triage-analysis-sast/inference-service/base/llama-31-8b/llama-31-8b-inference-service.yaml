@@ -6,13 +6,13 @@ metadata:
     opendatahub.io/hardware-profile-resource-version: '43865'
     opendatahub.io/genai-use-case: 'chat, natural language processing'
     openshift.io/description: ''
-    openshift.io/display-name: RedHatAI/Qwen-3-Coder-480B
+    openshift.io/display-name: RedHatAI/Llama-3.1-8B-Instruct
     serving.kserve.io/deploymentMode: RawDeployment
     opendatahub.io/hardware-profile-namespace: redhat-ods-applications
     opendatahub.io/hardware-profile-name: nvidia-gpu-serving
     opendatahub.io/model-type: generative
-    opendatahub.io/connections: qwen3-coder-480b-secret
-  name: redhatqwen-3-coder-480b
+    opendatahub.io/connections: llama-31-8b-secret
+  name: redhataillama-31-8b-instruct
   labels:
     opendatahub.io/dashboard: 'true'
     opendatahub.io/genai-asset: 'true'
@@ -21,15 +21,16 @@ spec:
     automountServiceAccountToken: false
     deploymentStrategy:
       type: RollingUpdate
-    maxReplicas: 1
+    maxReplicas: 0
     minReplicas: 0
     model:
       args:
+        - '--dtype=half'
         - '--max-model-len=20000'
         - '--gpu-memory-utilization=0.95'
         - '--enable-auto-tool-choice'
-        - '--tool-call-parser=qwen3_coder'
-        - '--tensor-parallel-size=2'
+        - '--tool-call-parser=llama3_json'
+        - '--chat-template=/opt/app-root/template/tool_chat_template_llama3.2_json.jinja'
       modelFormat:
         name: vLLM
       name: ''
@@ -42,8 +43,8 @@ spec:
           cpu: '4'
           memory: 8Gi
           nvidia.com/gpu: '1'
-      runtime: redhatqwen-3-coder-480b
-      storageUri: 'oci://registry.redhat.io/rhelai1/modelcar-qwen3-coder-480b-a35b-instruct-fp8:1.5'
+      runtime: redhataillama-31-8b-instruct
+      storageUri: 'oci://registry.redhat.io/rhelai1/modelcar-llama-3-1-8b-instruct:1.5'
     tolerations:
       - effect: NoSchedule
         key: nvidia-gpu-only
