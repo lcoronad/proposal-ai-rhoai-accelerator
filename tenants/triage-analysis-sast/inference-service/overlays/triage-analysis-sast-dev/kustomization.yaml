@@ -4,5 +4,5 @@ kind: Kustomization
 namespace: triage-analysis-sast
 
 resources:
-  #- ../../base/llama-31-8b/
-  - ../../base/qwen3-coder-480b/
+  - ../../base/llama-31-8b/
+  #- ../../base/qwen3-coder-480b/
