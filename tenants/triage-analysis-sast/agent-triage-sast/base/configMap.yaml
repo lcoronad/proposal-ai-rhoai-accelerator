@@ -15,7 +15,7 @@ data:
   REDIS_URL: redis://redis-service.triage-analysis-sast.svc.cluster.local:6379
   MILVUS_HOST: milvus-service.triage-analysis-sast.svc.cluster.local
   MILVUS_PORT: "19530"
-  MILVUS_COLLECTION_NAME: company_coding_standards
+  MILVUS_COLLECTION_NAME: diccionario_cwe
   SLACK_TOOL_URL: http://mcp-slack.triage-analysis-sast.svc.cluster.local:8080/sse
   GITHUB_TOOL_URL: http://mcp-github.triage-analysis-sast.svc.cluster.local:8080/sse
   PARALLEL_TOOL_CALLS: "false"
@@ -26,8 +26,8 @@ data:
   TRIAGE_USER_PROMPT: |
     Analiza estos reportes: TRIVY: {trivy_json} y OPENGREP: {opengrep_sarif}.
     1. Genera soluciones específicas de remediación lo más detalladas posible y usa la herramienta de query_company_coding_standards para dar mayor explicacion.
-    2. Comenta el detalle de las remediaciones en el repositorio '{repo_path}' PR '{pull_request_number}' usando la herramienta de github_comment.
-    3. Envía una notificación de fin de análisis a Slack indicando que el análisis ha finalizado usando la herramienta de slack_message.
+    2. Comenta el detalle de las remediaciones en el repositorio '{repo_path}' PR '{pull_request_number}' usando algunas de las acciones de la herramienta de github.
+    3. Envía una notificación de fin de análisis a Slack indicando que el análisis ha finalizado usando algunas de las acciones de la herramienta de slack.
     Ejecuta los pasos de forma secuencial: una herramienta por turno, esperando el resultado antes de continuar.
   SLACK_USER_PROMPT: |
     El desarrollador preguntó en Slack: {slack_text}. Responde usando las herramientas de Slack en el canal '{channel}' e hilo '{thread_ts}' e investiga las normativas internas si es necesario.
