@@ -15,7 +15,7 @@ data:
   REDIS_URL: redis://redis-service.triage-analysis-sast.svc.cluster.local:6379
   MILVUS_HOST: milvus-service.triage-analysis-sast.svc.cluster.local
   MILVUS_PORT: "19530"
-  MILVUS_COLLECTION_NAME: diccionario_cwe
+  MILVUS_COLLECTION_NAME: company_coding_standards
   SLACK_TOOL_URL: http://mcp-slack.triage-analysis-sast.svc.cluster.local:8080/sse
   GITHUB_TOOL_URL: http://mcp-github.triage-analysis-sast.svc.cluster.local:8080/sse
   PARALLEL_TOOL_CALLS: "false"
