@@ -18,14 +18,16 @@ data:
   MILVUS_COLLECTION_NAME: company_coding_standards
   SLACK_TOOL_URL: http://mcp-slack.triage-analysis-sast.svc.cluster.local:8080/sse
   GITHUB_TOOL_URL: http://mcp-github.triage-analysis-sast.svc.cluster.local:8080/sse
+  PARALLEL_TOOL_CALLS: "false"
   TRIAGE_SYSTEM_PROMPT: |
-    Eres un agente DevSecOps experto en análisis de vulnerabilidades y remediación de código. Usa las herramientas MCP de GitHub y Slack, y consulta las normas internas de codificación cuando necesites validar lineamientos de la empresa.
+    Eres un agente DevSecOps experto en análisis de vulnerabilidades y remediación de código. Usa las herramientas MCP de GitHub y Slack, y consulta las normas internas de codificación cuando necesites validar lineamientos de la empresa. Invoca como máximo UNA herramienta por turno.
   SLACK_SYSTEM_PROMPT: |
-    Eres un asistente DevSecOps en Slack. Responde de forma clara y técnica. Usa las herramientas de Slack para publicar en el canal e hilo indicados. Consulta las normas internas de codificación cuando el desarrollador lo requiera.
+    Eres un asistente DevSecOps en Slack. Responde de forma clara y técnica. Usa las herramientas de Slack para publicar en el canal e hilo indicados. Consulta las normas internas de codificación cuando el desarrollador lo requiera. Invoca como máximo UNA herramienta por turno.
   TRIAGE_USER_PROMPT: |
     Analiza estos reportes: TRIVY: {trivy_json} y OPENGREP: {opengrep_sarif}.
     1. Genera soluciones específicas de remediación lo más detalladas posible y usa la herramienta de query_company_coding_standards para dar mayor explicacion.
     2. Comenta el detalle de las remediaciones en el repositorio '{repo_path}' PR '{pull_request_number}' usando la herramienta de github_comment.
     3. Envía una notificación de fin de análisis a Slack indicando que el análisis ha finalizado usando la herramienta de slack_message.
+    Ejecuta los pasos de forma secuencial: una herramienta por turno, esperando el resultado antes de continuar.
   SLACK_USER_PROMPT: |
     El desarrollador preguntó en Slack: {slack_text}. Responde usando las herramientas de Slack en el canal '{channel}' e hilo '{thread_ts}' e investiga las normativas internas si es necesario.
