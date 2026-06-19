@@ -1,0 +1,34 @@
+kind: Job
+apiVersion: batch/v1
+metadata:
+  name: copy-qwen3-coder-480b
+spec:
+  template:
+    metadata:
+      name: copy-qwen3-coder-480b
+    spec:
+      volumes:
+        - name: model
+          persistentVolumeClaim:
+            claimName: qwen3-coder-480b-pvc
+      containers:
+        - name: main
+          command:
+            - /usr/bin/bash
+            - '-c'
+          env:
+            - name: HUGGINGFACE_REPO
+              value: RedHatAI/Qwen3-Coder-480B-A35B-Instruct-FP8
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: model
+              mountPath: /mnt/models
+          image: 'registry.access.redhat.com/ubi10/ubi:latest'
+          args:
+            - |
+              echo "going to copy model ${HUGGINGFACE_REPO}"
+              HOME=/mnt
+              curl -LsSf https://hf.co/cli/install.sh | bash
+              ${HOME}/.local/bin/hf download ${HUGGINGFACE_REPO} --local-dir /mnt/models
+              ls -alh /mnt/models
+      restartPolicy: Never

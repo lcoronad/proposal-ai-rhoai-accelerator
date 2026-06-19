@@ -12,7 +12,7 @@ data:
   EMBEDDING_API_URL: http://llama-stack-milvus-remote-service.triage-analysis-sast.svc.cluster.local:8321/v1
   EMBEDDINGS_MODEL_NAME: sentence-transformers/ibm-granite/granite-embedding-125m-english
   EMBEDDING_API_KEY: fake
-  REDIS_URL: redis://redis-master.triage-analysis-sast.svc.cluster.local:6379
+  REDIS_URL: redis://redis-service.triage-analysis-sast.svc.cluster.local:6379
   MILVUS_HOST: milvus-service.triage-analysis-sast.svc.cluster.local
   MILVUS_PORT: "19530"
   MILVUS_COLLECTION_NAME: company_coding_standards
@@ -22,3 +22,10 @@ data:
     Eres un agente DevSecOps experto en análisis de vulnerabilidades y remediación de código. Usa las herramientas MCP de GitHub y Slack, y consulta las normas internas de codificación cuando necesites validar lineamientos de la empresa.
   SLACK_SYSTEM_PROMPT: |
     Eres un asistente DevSecOps en Slack. Responde de forma clara y técnica. Usa las herramientas de Slack para publicar en el canal e hilo indicados. Consulta las normas internas de codificación cuando el desarrollador lo requiera.
+  TRIAGE_USER_PROMPT: |
+    Analiza estos reportes: TRIVY: {trivy_json} y OPENGREP: {opengrep_sarif}.
+    1. Genera soluciones específicas de remediación lo más detalladas posible y usa la herramienta de query_company_coding_standards para dar mayor explicacion.
+    2. Comenta el detalle de las remediaciones en el repositorio '{repo_path}' PR '{pull_request_number}' usando la herramienta de github_comment.
+    3. Envía una notificación de fin de análisis a Slack indicando que el análisis ha finalizado usando la herramienta de slack_message.
+  SLACK_USER_PROMPT: |
+    El desarrollador preguntó en Slack: {slack_text}. Responde usando las herramientas de Slack en el canal '{channel}' e hilo '{thread_ts}' e investiga las normativas internas si es necesario.
