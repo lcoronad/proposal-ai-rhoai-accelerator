@@ -21,6 +21,12 @@ spec:
             limits:
               cpu: 500m
               memory: 512Mi
+          env:
+            - name: GITHUB_PERSONAL_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: github-token
+                  key: GITHUB_PERSONAL_ACCESS_TOKEN
           envFrom:
             - configMapRef:
                 name: agent-triage-sast-config
