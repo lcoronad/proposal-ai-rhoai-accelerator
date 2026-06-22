@@ -35,7 +35,7 @@ spec:
               protocol: TCP
           imagePullPolicy: Always
           terminationMessagePolicy: File
-          image: 'quay.io/lcoronad/agent-triage-sast:1.0.7'
+          image: 'quay.io/lcoronad/agent-triage-sast:1.0.8'
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
