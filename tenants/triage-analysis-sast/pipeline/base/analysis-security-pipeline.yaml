@@ -46,14 +46,7 @@ spec:
       taskRef:
         resolver: hub
         params:
-          - name: kind
-            value: task
-          - name: name
-            value: trivy-scan-task
-          - name: version
-            value: "0.9"
-          - name: namespace
-            value: triage-analysis-sast
+          name: trivy-scan-task
     - name: opengrep-scan-task
       runAfter:
         - clone-repository
@@ -63,14 +56,7 @@ spec:
       taskRef:
         resolver: hub
         params:
-          - name: kind
-            value: task
-          - name: name
-            value: opengrep-scan-task
-          - name: version
-            value: "0.9"
-          - name: namespace
-            value: triage-analysis-sast
+          name: opengrep-scan-task
     - name: consume-agent-task
       params:
         - name: repo-path
@@ -92,11 +78,4 @@ spec:
       taskRef:
         resolver: hub
         params:
-          - name: kind
-            value: task
-          - name: name
-            value: consume-agent-task
-          - name: version
-            value: "0.9"
-          - name: namespace
-            value: triage-analysis-sast
+          name: consume-agent-task
