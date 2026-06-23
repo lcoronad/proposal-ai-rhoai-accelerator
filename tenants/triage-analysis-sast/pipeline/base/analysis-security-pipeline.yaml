@@ -44,9 +44,7 @@ spec:
         - name: source-dir
           workspace: shared-workspace
       taskRef:
-        resolver: hub
-        params:
-          - name: trivy-scan-task
+        name: trivy-scan-task
     - name: opengrep-scan-task
       runAfter:
         - clone-repository
@@ -54,9 +52,7 @@ spec:
         - name: source-dir
           workspace: shared-workspace
       taskRef:
-        resolver: hub
-        params:
-          - name: opengrep-scan-task
+        name: opengrep-scan-task
     - name: consume-agent-task
       params:
         - name: repo-path
@@ -76,6 +72,4 @@ spec:
         - name: source-dir
           workspace: shared-workspace
       taskRef:
-        resolver: hub
-        params:
-          - name: consume-agent-task
+        name: consume-agent-task
