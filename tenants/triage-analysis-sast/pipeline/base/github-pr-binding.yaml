@@ -5,7 +5,7 @@ metadata:
 spec:
   params:
     - name: repo_path
-      value: $(body.repository.full_name)
+      value: "https://github.com/$(body.repository.full_name)"
     - name: pr_number
       value: $(body.pull_request.number)
     - name: repo_owner

@@ -24,9 +24,16 @@ spec:
         - name: REVISION
           value: $(params.commit-id)
       taskRef:
-        name: git-clone
-        apiVersion: tekton.dev/v1
-        kind: Task
+        resolver: hub
+        params:
+          - name: kind
+            value: task
+          - name: name
+            value: git-clone
+          - name: version
+            value: "0.4.1"
+          - name: namespace
+            value: openshift-pipelines
       workspaces:
         - name: output
           workspace: shared-workspace
@@ -37,9 +44,14 @@ spec:
         - name: source-dir
           workspace: shared-workspace
       taskRef:
-        name: trivy-scan-task
-        apiVersion: tekton.dev/v1
-        kind: Task
+        resolver: hub
+        params:
+          - name: kind
+            value: task
+          - name: name
+            value: trivy-scan-task
+          - name: namespace
+            value: triage-analysis-sast
     - name: opengrep-scan-task
       runAfter:
         - clone-repository
@@ -47,9 +59,14 @@ spec:
         - name: source-dir
           workspace: shared-workspace
       taskRef:
-        name: opengrep-scan-task
-        apiVersion: tekton.dev/v1
-        kind: Task
+        resolver: hub
+        params:
+          - name: kind
+            value: task
+          - name: name
+            value: opengrep-scan-task
+          - name: namespace
+            value: triage-analysis-sast
     - name: consume-agent-task
       params:
         - name: repo-path
@@ -69,6 +86,11 @@ spec:
         - name: source-dir
           workspace: shared-workspace
       taskRef:
-        name: consume-agent-task
-        apiVersion: tekton.dev/v1
-        kind: Task
+        resolver: hub
+        params:
+          - name: kind
+            value: task
+          - name: name
+            value: consume-agent-task
+          - name: namespace
+            value: triage-analysis-sast
