@@ -50,6 +50,8 @@ spec:
             value: task
           - name: name
             value: trivy-scan-task
+          - name: version
+            value: "0.9"
           - name: namespace
             value: triage-analysis-sast
     - name: opengrep-scan-task
@@ -65,6 +67,8 @@ spec:
             value: task
           - name: name
             value: opengrep-scan-task
+          - name: version
+            value: "0.9"
           - name: namespace
             value: triage-analysis-sast
     - name: consume-agent-task
@@ -92,5 +96,7 @@ spec:
             value: task
           - name: name
             value: consume-agent-task
+          - name: version
+            value: "0.9"
           - name: namespace
             value: triage-analysis-sast
