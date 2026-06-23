@@ -25,6 +25,7 @@ spec:
           value: $(params.commit-id)
       taskRef:
         name: git-clone
+        kind: ClusterTask
       workspaces:
         - name: output
           workspace: shared-workspace
@@ -36,6 +37,7 @@ spec:
           workspace: shared-workspace
       taskRef:
         name: trivy-scan-task
+        kind: Task
     - name: opengrep-scan-task
       runAfter:
         - clone-repository
@@ -44,6 +46,7 @@ spec:
           workspace: shared-workspace
       taskRef:
         name: opengrep-scan-task
+        kind: Task
     - name: consume-agent-task
       params:
         - name: repo-path
@@ -64,3 +67,4 @@ spec:
           workspace: shared-workspace
       taskRef:
         name: consume-agent-task
+        kind: Task
