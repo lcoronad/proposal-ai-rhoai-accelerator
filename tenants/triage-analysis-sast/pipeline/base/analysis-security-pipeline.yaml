@@ -19,9 +19,9 @@ spec:
   tasks:
     - name: clone-repository
       params:
-        - name: URL
+        - name: url
           value: $(params.repo-path)
-        - name: REVISION
+        - name: revision
           value: $(params.commit-id)
       taskRef:
         resolver: hub
