@@ -29,7 +29,7 @@ data:
     Analiza estos reportes: TRIVY: {trivy_json} y OPENGREP: {opengrep_sarif}.
     1. Genera soluciones específicas de remediación lo más detalladas posible y usa la herramienta de query_company_coding_standards para dar mayor explicacion.
     2. Comenta el detalle de las remediaciones en el repositorio '{repo_path}' PR '{pull_request_number}' Owner '{repo_owner}' Commit '{commit_id}' usando la herramienta publicar_comentario_linea_pr (OPENGREP) si hay un número de línea específico o publicar_comentario_general_pr (TRIVY) si no hay un número de línea específico.
-    3. Envía una notificación de fin de análisis a Slack indicando que el análisis ha finalizado usando algunas de las acciones de la herramienta de slack_message.
+    3. Envía una notificación de fin de análisis a Slack indicando que el análisis ha finalizado usando algunas de las acciones de la herramienta de slack_post_message.
     Ejecuta los pasos de forma secuencial: una herramienta por turno, esperando el resultado antes de continuar.
   SLACK_USER_PROMPT: |
     El desarrollador preguntó en Slack: {slack_text}. Responde usando las herramientas de Slack en el canal '{channel}' e hilo '{thread_ts}' e investiga las normativas internas si es necesario.
