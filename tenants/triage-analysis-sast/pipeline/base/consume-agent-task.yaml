@@ -1,0 +1,33 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: consume-agent-task
+spec:
+  workspaces:
+    - name: source-dir
+  params:
+    - name: repo-path
+    - name: pull-request-number
+    - name: api-url
+    - name: repo-owner
+    - name: commit-id
+  steps:
+    - name: consume-agent
+      image: image-registry.openshift-image-registry.svc:5000/triage-analysis-sast/consume-agent:latest
+      workingDir: $(workspaces.source-dir.path)
+      script: |
+        #!/bin/sh
+        TRIVY_DATA=$(cat trivy-results.json 2>/dev/null || echo "{}")
+        OPENGREP_DATA=$(cat opengrep-results.sarif 2>/dev/null || echo "{}")
+        
+        jq -n \
+          --arg repo "$(params.repo-path)" \
+          --arg pr "$(params.pull-request-number)" \
+          --arg repo_owner "$(params.repo-owner)" \
+          --arg commit_id "$(params.commit-id)" \
+          --argjson trivy "$TRIVY_DATA" \
+          --argjson opengrep "$OPENGREP_DATA" \
+          '{repo_path: $repo, pull_request_number: $pr, repo_owner: $repo_owner, commit_id: $commit_id, trivy_json: $trivy, opengrep_sarif: $opengrep}' > payload.json
+
+        curl -s -X POST -H "Content-Type: application/json" -d @payload.json \
+          "$(params.api-url)"

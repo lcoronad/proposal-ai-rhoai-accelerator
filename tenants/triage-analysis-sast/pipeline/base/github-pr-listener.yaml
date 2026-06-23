@@ -1,0 +1,17 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: github-pr-listener
+spec:
+  triggers:
+    - name: github-pr-trigger
+      interceptors:
+        - ref:
+            name: "github"
+          params:
+            - name: "eventTypes"
+              value: ["pull_request"]
+      bindings:
+        - ref: "github-pr-binding"
+      template:
+        ref: "analysis-security-pipeline-template"

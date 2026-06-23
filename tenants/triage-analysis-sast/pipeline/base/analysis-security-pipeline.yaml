@@ -1,0 +1,66 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: analysis-security-pipeline
+spec:
+  params:
+    - name: repo-path
+      value: $(params.repo-path)
+    - name: pull-request-number
+      value: $(params.pull-request-number)
+    - name: api-url
+      value: $(params.api-url)
+    - name: repo-owner
+      value: $(params.repo-owner)
+    - name: commit-id
+      value: $(params.commit-id)
+  workspaces:
+    - name: shared-workspace
+  tasks:
+    - name: clone-repository
+      params:
+        - name: URL
+          value: $(params.repo-path)
+        - name: REVISION
+          value: $(params.commit-id)
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+    - name: trivy-scan-task
+      runAfter:
+        - clone-repository
+      workspaces: 
+        - name: source-dir
+          workspace: shared-workspace
+      taskRef:
+        name: trivy-scan-task
+    - name: opengrep-scan-task
+      runAfter:
+        - clone-repository
+      workspaces:
+        - name: source-dir
+          workspace: shared-workspace
+      taskRef:
+        name: opengrep-scan-task
+    - name: consume-agent-task
+      params:
+        - name: repo-path
+          value: $(params.repo-path)
+        - name: pull-request-number
+          value: $(params.pull-request-number)
+        - name: api-url
+          value: $(params.api-url)
+        - name: repo-owner
+          value: $(params.repo-owner)
+        - name: commit-id
+          value: $(params.commit-id)
+      runAfter:
+        - trivy-scan-task
+        - opengrep-scan-task
+      workspaces:
+        - name: source-dir
+          workspace: shared-workspace
+      taskRef:
+        name: consume-agent-task

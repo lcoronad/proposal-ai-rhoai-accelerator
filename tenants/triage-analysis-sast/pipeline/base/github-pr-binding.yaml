@@ -1,0 +1,14 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: github-pr-binding
+spec:
+  params:
+    - name: repo_path
+      value: $(body.repository.full_name)
+    - name: pr_number
+      value: $(body.pull_request.number)
+    - name: repo_owner
+      value: $(body.repository.owner.login)
+    - name: commit_id
+      value: $(body.pull_request.head.sha)

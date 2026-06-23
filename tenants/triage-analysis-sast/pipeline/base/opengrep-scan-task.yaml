@@ -1,0 +1,19 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: opengrep-scan-task
+spec:
+  workspaces:
+    - name: source-dir
+  steps:
+    - name: opengrep-scan
+      image: image-registry.openshift-image-registry.svc:5000/triage-analysis-sast/opengrep-scan:latest
+      workingDir: $(workspaces.source-dir.path)
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities: { drop: ["ALL"] }
+        runAsNonRoot: true
+        runAsUser: 1001
+      script: |
+        #!/bin/sh
+        opengrep scan --config=p/java --sarif --output=opengrep-results.sarif || true

@@ -1,0 +1,19 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: trivy-scan-task
+spec:
+  workspaces:
+    - name: source-dir
+  steps:
+    - name: trivy-scan
+      image: aquasec/trivy:latest
+      workingDir: $(workspaces.source-dir.path)
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities: { drop: ["ALL"] }
+        runAsNonRoot: true
+        runAsUser: 1001
+      script: |
+        #!/bin/sh
+        trivy fs --format json --output trivy-results.json . || true

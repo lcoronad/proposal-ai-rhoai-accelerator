@@ -1,0 +1,38 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: analysis-security-pipeline-template
+spec:
+  params:
+    - name: repo_path
+    - name: pr_number
+    - name: repo_owner
+    - name: commit_id
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1
+      kind: PipelineRun
+      metadata:
+        generateName: analysis-security-pipelinerun-
+      spec:
+        pipelineRef:
+          name: analysis-security-pipeline
+        params:
+          - name: repo-path
+            value: $(tt.params.repo_path)
+          - name: pull-request-number
+            value: $(tt.params.pr_number)
+          - name: api-url
+            value: "https://agent-triage-sast-triage-analysis-sast.apps.cluster-r7xnh.r7xnh.sandbox723.opentlc.com/api/v1/triage"
+          - name: repo-owner
+            value: $(tt.params.repo_owner)
+          - name: commit-id
+            value: $(tt.params.commit_id)
+        workspaces:
+          - name: shared-workspace
+            volumeClaimTemplate:
+              spec:
+                accessModes:
+                  - ReadWriteOnce
+                resources:
+                  requests:
+                    storage: 10Gi
