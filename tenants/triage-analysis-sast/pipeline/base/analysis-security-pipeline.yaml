@@ -25,6 +25,7 @@ spec:
           value: $(params.commit-id)
       taskRef:
         name: git-clone
+        apiVersion: tekton.dev/v1
         kind: ClusterTask
       workspaces:
         - name: output
@@ -37,6 +38,7 @@ spec:
           workspace: shared-workspace
       taskRef:
         name: trivy-scan-task
+        apiVersion: tekton.dev/v1
         kind: Task
     - name: opengrep-scan-task
       runAfter:
@@ -46,6 +48,7 @@ spec:
           workspace: shared-workspace
       taskRef:
         name: opengrep-scan-task
+        apiVersion: tekton.dev/v1
         kind: Task
     - name: consume-agent-task
       params:
@@ -67,4 +70,5 @@ spec:
           workspace: shared-workspace
       taskRef:
         name: consume-agent-task
+        apiVersion: tekton.dev/v1
         kind: Task
