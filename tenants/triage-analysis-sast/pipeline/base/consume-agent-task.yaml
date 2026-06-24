@@ -17,17 +17,28 @@ spec:
       workingDir: $(workspaces.source-dir.path)
       script: |
         #!/bin/sh
-        TRIVY_DATA=$(cat trivy-results.json 2>/dev/null || echo "{}")
-        OPENGREP_DATA=$(cat opengrep-results.sarif 2>/dev/null || echo "{}")
+        cd $(workspaces.source-dir.path)
         
+        [ -f trivy-results.json ] || echo "{}" > trivy-results.json
+        [ -f opengrep-results.sarif ] || echo "{}" > opengrep-results.sarif
+
         jq -n \
           --arg repo "$(params.repo-path)" \
           --arg pr "$(params.pull-request-number)" \
           --arg repo_owner "$(params.repo-owner)" \
           --arg commit_id "$(params.commit-id)" \
-          --argjson trivy "$TRIVY_DATA" \
-          --argjson opengrep "$OPENGREP_DATA" \
-          '{repo_path: $repo, pull_request_number: $pr, repo_owner: $repo_owner, commit_id: $commit_id, trivy_json: $trivy, opengrep_sarif: $opengrep}' > payload.json
+          --slurpfile trivy trivy-results.json \
+          --slurpfile opengrep opengrep-results.sarif \
+          '{
+            repo_path: $repo, 
+            pull_request_number: $pr, 
+            repo_owner: $repo_owner, 
+            commit_id: $commit_id, 
+            trivy_json: $trivy[0], 
+            opengrep_sarif: $opengrep[0]
+          }' > payload.json
+        
+        cat payload.json
 
         curl -s -X POST -H "Content-Type: application/json" -d @payload.json \
           "$(params.api-url)"

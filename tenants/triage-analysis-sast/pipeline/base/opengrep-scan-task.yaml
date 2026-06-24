@@ -21,4 +21,4 @@ spec:
         runAsUser: 1001
       script: |
         #!/bin/sh
-        /root/.opengrep/cli/latest/opengrep scan --config=p/java --sarif --output=opengrep-results.sarif || true
+        /root/.opengrep/cli/latest/opengrep scan --config=p/java --sarif --output=$(workspaces.source-dir.path)/opengrep-results.sarif || true
