@@ -8,7 +8,7 @@ data:
   QWEN_API_KEY: fake
   TEMPERATURE: "0.1"
   TOP_P: "0.95"
-  MAX_COMPLETION_TOKENS: "20000"
+  MAX_COMPLETION_TOKENS: "4096"
   EMBEDDING_API_URL: http://llama-stack-milvus-remote-service.triage-analysis-sast.svc.cluster.local:8321/v1
   EMBEDDINGS_MODEL_NAME: sentence-transformers/ibm-granite/granite-embedding-125m-english
   EMBEDDING_API_KEY: fake
