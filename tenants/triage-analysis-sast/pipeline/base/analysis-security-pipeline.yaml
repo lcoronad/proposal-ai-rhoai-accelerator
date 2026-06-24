@@ -37,9 +37,17 @@ spec:
       workspaces:
         - name: output
           workspace: shared-workspace
-    - name: trivy-scan-task
+    - name: resolver-dependencies-maven
       runAfter:
         - clone-repository
+      workspaces: 
+        - name: source-dir
+          workspace: shared-workspace
+      taskRef:
+        name: resolver-dependencies-maven-task
+    - name: trivy-scan-task
+      runAfter:
+        - trivy-dependencias-maven
       workspaces: 
         - name: source-dir
           workspace: shared-workspace
@@ -47,7 +55,7 @@ spec:
         name: trivy-scan-task
     - name: opengrep-scan-task
       runAfter:
-        - clone-repository
+        - trivy-dependencias-maven
       workspaces:
         - name: source-dir
           workspace: shared-workspace

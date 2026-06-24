@@ -13,7 +13,7 @@ spec:
     - name: commit-id
   steps:
     - name: consume-agent
-      image: image-registry.openshift-image-registry.svc:5000/triage-analysis-sast/consume-agent:latest
+      image: image-registry.openshift-image-registry.svc:5000/triage-analysis-sast/consume-agent:1.0.1
       workingDir: $(workspaces.source-dir.path)
       script: |
         #!/bin/sh
