@@ -10,3 +10,4 @@ resources:
   - github-pr-binding.yaml
   - github-pr-listener.yaml
   - github-pr-route.yaml
+  - resolver-dependencies-maven-task.yaml
