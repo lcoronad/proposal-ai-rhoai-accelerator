@@ -47,7 +47,7 @@ spec:
         name: resolver-dependencies-maven-task
     - name: trivy-scan-task
       runAfter:
-        - trivy-dependencias-maven
+        - resolver-dependencies-maven
       workspaces: 
         - name: source-dir
           workspace: shared-workspace
@@ -55,7 +55,7 @@ spec:
         name: trivy-scan-task
     - name: opengrep-scan-task
       runAfter:
-        - trivy-dependencias-maven
+        - resolver-dependencies-maven
       workspaces:
         - name: source-dir
           workspace: shared-workspace
