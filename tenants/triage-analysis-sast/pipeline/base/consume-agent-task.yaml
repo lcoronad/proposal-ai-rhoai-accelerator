@@ -29,14 +29,8 @@ spec:
           --arg commit_id "$(params.commit-id)" \
           --slurpfile trivy trivy-results.json \
           --slurpfile opengrep opengrep-results.sarif \
-          '{
-            repo_path: $repo, 
-            pull_request_number: $pr, 
-            repo_owner: $repo_owner, 
-            commit_id: $commit_id, 
-            trivy_json: ($trivy[0].Results[]? | .Vulnerabilities[]? | {id: .VulnerabilityID, pkg: .PkgName, installed: .InstalledVersion, fixed: .FixedVersion})
-            opengrep_sarif: $opengrep[0]
-          }' > payload.json
+          '{"repo_path": $repo, "pull_request_number": $pr, "repo_owner": $repo_owner, "commit_id": $commit_id, "trivy_json": ($trivy[0].Results[]? | .Vulnerabilities[]? | {id: .VulnerabilityID, pkg: .PkgName, installed: .InstalledVersion, fixed: .FixedVersion}), "opengrep_sarif": $opengrep[0]}' \
+          > payload.json
         
         cat payload.json
 
