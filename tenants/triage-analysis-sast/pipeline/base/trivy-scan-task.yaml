@@ -10,6 +10,8 @@ spec:
       env:
         - name: TRIVY_CACHE_DIR
           value: "$(workspaces.source-dir.path)/.trivy-cache"
+        - name: HOME
+          value: "$(workspaces.source-dir.path)"
       image: aquasec/trivy:latest
       workingDir: $(workspaces.source-dir.path)
       securityContext:
