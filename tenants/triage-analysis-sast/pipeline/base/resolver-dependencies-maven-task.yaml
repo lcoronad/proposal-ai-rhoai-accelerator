@@ -16,4 +16,4 @@ spec:
         runAsUser: 1001
       script: |
         #!/bin/sh
-        mvn dependency:go-offline -Dmaven.repo.local=$(workspaces.source-dir.path)/.m2 || true
+        mvn dependency:resolve -Dmaven.repo.local=$(workspaces.source-dir.path)/.m2 || true
