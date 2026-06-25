@@ -46,6 +46,7 @@ data:
     ## Contexto
     - Repositorio: {repo_path}
     - Owner: {repo_owner}
+    - Repo: {repo_name}
     - PR: {pull_request_number}
     - Commit: {commit_id}
 
@@ -54,9 +55,10 @@ data:
 
     ## Flujo (una herramienta por turno)
     1. Consulta query_company_coding_standards (CVE, CWE o rule_id) para enriquecer contexto.
-    2. Redacta comentario SCA estructurado y publícalo con publicar_comentario_general_pr (owner={repo_owner}, repo={repo_path}, pr_number={pull_request_number}). El campo vulnerabilidades_md DEBE seguir la plantilla TRIVY de GITHUB_REMEDIATION_GUIDE.
-    3. Por CADA hallazgo OPENGREP: redacta recomendacion con plantilla SAST y publica con publicar_comentario_linea_pr (owner={repo_owner}, repo={repo_path}, pr_number={pull_request_number}, commit_id={commit_id}, path, line, recomendacion).
+    2. Redacta comentario SCA estructurado y publícalo con publicar_comentario_general_pr (owner={repo_owner}, repo={repo_name}, pr_number={pull_request_number}). El campo vulnerabilidades_md DEBE seguir la plantilla TRIVY de GITHUB_REMEDIATION_GUIDE.
+    3. Por CADA hallazgo OPENGREP: redacta recomendacion con plantilla SAST y publica con publicar_comentario_linea_pr (owner={repo_owner}, repo={repo_name}, pr_number={pull_request_number}, commit_id={commit_id}, path, line, recomendacion).
     4. Notifica fin de análisis en Slack (resumen: total Trivy, total OpenGrep, acciones).
+    Usa SOLO owner y repo cortos (ej. lcoronad, unsecure-quarkus-app); nunca URLs completas.
 
     ## Guía de formato para GitHub
     {github_remediation_guide}
