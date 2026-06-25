@@ -29,7 +29,7 @@ spec:
           --arg commit_id "$(params.commit-id)" \
           --slurpfile trivy trivy-results.json \
           --slurpfile opengrep opengrep-results.sarif \
-          '{"repo_path": $repo, "pull_request_number": $pr, "repo_owner": $repo_owner, "commit_id": $commit_id, "trivy_json": [ $trivy[0].Results[]? | .Vulnerabilities[]? | { "id": .VulnerabilityID, "pkg": .PkgName, "fixed": .FixedVersion } ], "opengrep_sarif": [ $opengrep[0].runs[]?.results[]? | { "ruleId": .ruleId, "file": .locations[0].physicalLocation.artifactLocation.uri, "line": .locations[0].physicalLocation.region.startLine } ]}' \
+          '{"repo_path": $repo, "pull_request_number": $pr, "repo_owner": $repo_owner, "commit_id": $commit_id, "trivy_json": [$trivy[0].Results[]? | .Target as $target | .Vulnerabilities[]? | { "id": (.VulnerabilityID // "UNKNOWN"), "pkg": (.PkgName // ""), "severity": (.Severity // ""), "target": $target, "fixed_version": (.FixedVersion // ""), "description": (.Description // .Title // "") } ], "opengrep_sarif": [$opengrep[0].results[]? | { "rule_id": (.check_id // ""), "path": (.path // ""), "line": (.start.line // 0), "severity": (.extra.severity // .level // ""), "message": (.extra.message // ""), "cwe": (.extra.metadata.cwe[0] // "") } ]}' \
           > payload.json
         
         cat payload.json
