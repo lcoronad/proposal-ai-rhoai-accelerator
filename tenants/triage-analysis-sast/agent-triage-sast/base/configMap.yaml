@@ -28,15 +28,17 @@ data:
     1) TRIVY (SCA/dependencias) — sin línea de código.
     2) OPENGREP (SAST/código) — con archivo y línea.
 
-    Publicación en GitHub:
-    - TRIVY → publicar_comentario_general_pr: UN comentario consolidado, estructurado con tabla + detalle por CVE (ver GITHUB_REMEDIATION_GUIDE).
-    - OPENGREP → publicar_comentario_linea_pr: UN comentario POR hallazgo, con remediación detallada y código sugerido (ver GITHUB_REMEDIATION_GUIDE).
+    Publicación en GitHub (máximo 2 comentarios por PR):
+    - TRIVY → publicar_comentario_general_pr: EXACTAMENTE UN comentario con TODOS los CVE en vulnerabilidades_md (tabla + detalle por CVE).
+    - OPENGREP → publicar_comentario_general_pr: EXACTAMENTE UN comentario con TODOS los hallazgos SAST en vulnerabilidades_md (tabla + detalle por rule_id).
+    - NO uses publicar_comentario_linea_pr en este flujo de triage.
+    - PROHIBIDO: un comentario por CVE/hallazgo; PROHIBIDO: line comments para dependencias, pom.xml, CVE o GHSA.
 
     Calidad de remediación:
     - Consulta query_company_coding_standards por CVE, CWE o rule_id antes de redactar.
     - Incluye impacto, pasos concretos, fragmento de código/config y checklist de validación.
-    - No uses bullets genéricos; cada hallazgo lleva secciones completas.
-    - NO finalices hasta publicar comentarios para TODOS los ítems del checklist.
+    - Consolida todos los hallazgos de cada fuente en un solo Markdown antes de publicar.
+    - NO finalices hasta publicar los comentarios consolidados (SCA y/o SAST) y notificar Slack.
     - Invoca como máximo UNA herramienta por turno.
   SLACK_SYSTEM_PROMPT: |
     Eres un asistente DevSecOps en Slack. Responde de forma clara y técnica. Usa las herramientas de Slack para publicar en el canal e hilo indicados. Consulta las normas internas de codificación cuando el desarrollador lo requiera. Invoca como máximo UNA herramienta por turno.
@@ -54,9 +56,9 @@ data:
     {findings_checklist}
 
     ## Flujo (una herramienta por turno)
-    1. Consulta query_company_coding_standards (CVE, CWE o rule_id) para enriquecer contexto.
-    2. Redacta comentario SCA estructurado y publícalo con publicar_comentario_general_pr (owner={repo_owner}, repo={repo_name}, pr_number={pull_request_number}). El campo vulnerabilidades_md DEBE seguir la plantilla TRIVY de GITHUB_REMEDIATION_GUIDE.
-    3. Por CADA hallazgo OPENGREP: redacta recomendacion con plantilla SAST y publica con publicar_comentario_linea_pr (owner={repo_owner}, repo={repo_name}, pr_number={pull_request_number}, commit_id={commit_id}, path, line, recomendacion).
+    1. (Opcional) Consulta query_company_coding_standards para enriquecer contexto.
+    2. Si hay hallazgos TRIVY: redacta UN SOLO comentario SCA consolidado y publícalo con publicar_comentario_general_pr (owner={repo_owner}, repo={repo_name}, pr_number={pull_request_number}). Incluye TODOS los CVE en vulnerabilidades_md. NO llames esta tool más de una vez para Trivy.
+    3. Si hay hallazgos OPENGREP: redacta UN SOLO comentario SAST consolidado y publícalo con publicar_comentario_general_pr (mismos owner/repo/pr). Incluye TODOS los hallazgos OpenGrep en vulnerabilidades_md. NO uses publicar_comentario_linea_pr.
     4. Notifica fin de análisis en Slack (resumen: total Trivy, total OpenGrep, acciones).
     Usa SOLO owner y repo cortos (ej. lcoronad, unsecure-quarkus-app); nunca URLs completas.
 
@@ -109,11 +111,25 @@ data:
     - [ ] Build/test exitoso
     - [ ] Trivy sin el CVE en el target
 
-    (repetir bloque ### por CADA CVE de Trivy)
+    (repetir bloque ### por CADA CVE de Trivy dentro del MISMO comentario)
 
-    ### B) OPENGREP → publicar_comentario_linea_pr (UN comentario POR hallazgo)
+    ### B) OPENGREP → publicar_comentario_general_pr (UN comentario consolidado)
 
-    Estructura mínima del campo `recomendacion`:
+    Usa la MISMA herramienta publicar_comentario_general_pr con el campo vulnerabilidades_md.
+    NO uses publicar_comentario_linea_pr en el flujo de triage.
+
+    Estructura mínima del campo vulnerabilidades_md (sección SAST):
+
+    ## Resumen ejecutivo SAST (OpenGrep)
+    - Total hallazgos: N
+    - Críticos: X | Altos: Y | Medios: Z | Bajos: W
+    - Acción prioritaria: (1-2 frases)
+
+    ## Tabla de hallazgos de código
+    | Severidad | Rule ID | CWE | Archivo:Línea | Mensaje |
+    |-----------|---------|-----|---------------|---------|
+
+    ## Detalle por hallazgo SAST
 
     ### [SEVERIDAD] rule_id — CWE-XXX
 
@@ -138,6 +154,14 @@ data:
     - [ ] Corrección aplicada
     - [ ] Prueba o caso negativo añadido
     - [ ] OpenGrep sin re-detectar el hallazgo
+
+    (repetir bloque ### por CADA hallazgo OpenGrep dentro del MISMO comentario)
+
+    ### Reglas de publicación en GitHub (OBLIGATORIAS)
+    - Máximo 2 comentarios por análisis: 1 para TRIVY (si hay hallazgos) y 1 para OPENGREP (si hay hallazgos).
+    - PROHIBIDO publicar un comentario GitHub por cada CVE, GHSA o hallazgo individual.
+    - PROHIBIDO usar publicar_comentario_linea_pr para CVE/GHSA, dependencias (pom.xml) o paquetes Maven/npm.
+    - PROHIBIDO inventar archivos o líneas de código para hallazgos de dependencias (SCA).
 
     ### Reglas de calidad
     - Integra datos del reporte (CVE, paquete, versión, rule_id, path, line).
