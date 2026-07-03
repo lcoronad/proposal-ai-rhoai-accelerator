@@ -8,7 +8,7 @@ data:
   QWEN_API_KEY: fake
   TEMPERATURE: "0.1"
   TOP_P: "0.95"
-  MAX_COMPLETION_TOKENS: "2048"
+  MAX_COMPLETION_TOKENS: "3000"
   MODEL_MAX_CONTEXT_TOKENS: "20000"
   INPUT_TOKEN_RESERVE: "17000"
   TRIVY_JSON_MAX_CHARS: "5000"
@@ -44,7 +44,7 @@ data:
     - Incluye impacto, pasos concretos, fragmento de código/config y checklist de validación.
     - Consolida todos los hallazgos de cada fuente en un solo Markdown antes de publicar.
     - NO finalices hasta publicar los comentarios consolidados (SCA y/o SAST) y notificar Slack.
-    - Invoca como máximo UNA herramienta por turno.
+    - Si hay muchos CVE (>20): tabla consolidada por paquete + detalle solo CRITICAL/HIGH; no repitas bloques largos por cada CVE MEDIUM/LOW.
     - Usa SIEMPRE tool_calls nativas del API; NO escribas JSON de funciones en el texto de respuesta.
   SLACK_SYSTEM_PROMPT: |
     Eres un asistente DevSecOps en Slack. Responde de forma clara y técnica. Usa las herramientas de Slack para publicar en el canal e hilo indicados. Consulta las normas internas de codificación cuando el desarrollador lo requiera. Invoca como máximo UNA herramienta por turno.
