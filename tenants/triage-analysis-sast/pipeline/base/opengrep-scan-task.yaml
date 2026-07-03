@@ -12,6 +12,10 @@ spec:
           value: "$(workspaces.source-dir.path)/.cache"
         - name: HOME
           value: "/tmp"
+        - name: LANG
+          value: "C.UTF-8"
+        - name: LC_ALL
+          value: "C.UTF-8"
       image: image-registry.openshift-image-registry.svc:5000/triage-analysis-sast/opengrep-scan:latest
       workingDir: $(workspaces.source-dir.path)
       securityContext:

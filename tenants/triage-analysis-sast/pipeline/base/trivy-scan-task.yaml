@@ -22,6 +22,21 @@ spec:
       script: |
         #!/bin/sh
         cd "$(workspaces.source-dir.path)"
-        trivy fs --format json --output "$(workspaces.source-dir.path)/trivy-results.json" . || true
+
+        TRIVY_OPTS="--scanners vuln --format json --output $(workspaces.source-dir.path)/trivy-results.json"
+
+        if [ -f pom.xml ]; then
+          M2_REPO="$(workspaces.source-dir.path)/.m2/repository"
+          if [ -d "$M2_REPO" ] && [ -n "$(find "$M2_REPO" -name '*.pom' 2>/dev/null | head -1)" ]; then
+            POM_COUNT="$(find "$M2_REPO" -name '*.pom' 2>/dev/null | wc -l | tr -d ' ')"
+            echo "Cache Maven: $POM_COUNT POM(s) — escaneo offline (sin peticiones a Maven Central)"
+            TRIVY_OPTS="$TRIVY_OPTS --offline-scan"
+          else
+            echo "WARN: cache Maven vacío en $M2_REPO — riesgo de HTTP 429 en Maven Central"
+            echo "       Ejecute resolver-dependencies-maven antes de Trivy o espere Retry-After si el IP está bloqueado"
+          fi
+        fi
+
+        trivy fs $TRIVY_OPTS . || true
         echo -n "Trivy CVEs encontrados: "
         jq '[.Results[]?.Vulnerabilities[]?] | length' "$(workspaces.source-dir.path)/trivy-results.json" 2>/dev/null || echo "0"

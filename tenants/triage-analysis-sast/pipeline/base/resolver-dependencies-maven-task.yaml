@@ -7,6 +7,9 @@ spec:
     - name: source-dir
   steps:
     - name: resolver-dependencies-maven
+      env:
+        - name: HOME
+          value: "$(workspaces.source-dir.path)"
       image: image-registry.openshift-image-registry.svc:5000/triage-analysis-sast/consume-agent:1.0.1
       workingDir: $(workspaces.source-dir.path)
       securityContext:
@@ -59,11 +62,16 @@ spec:
         </settings>
         EOF
 
-        echo "Resolviendo dependencias Maven..."
+        M2_REPO="$(workspaces.source-dir.path)/.m2/repository"
+        mkdir -p "$M2_REPO"
+
+        echo "Resolviendo dependencias Maven en $M2_REPO ..."
         mvn -s /tmp/maven-settings.xml \
-          -Dmaven.repo.local="$(workspaces.source-dir.path)/.m2" \
-          -B dependency:resolve -DskipTests || {
-            echo "WARN: mvn dependency:resolve falló; Trivy seguirá escaneando pom.xml"
+          -Dmaven.repo.local="$M2_REPO" \
+          -B dependency:resolve dependency:resolve-plugins -DskipTests || {
+            echo "WARN: mvn dependency:resolve falló; Trivy usará --offline-scan y puede omitir dependencias no cacheadas"
             exit 0
           }
-        echo "Dependencias Maven resueltas correctamente"
+
+        POM_COUNT="$(find "$M2_REPO" -name '*.pom' 2>/dev/null | wc -l | tr -d ' ')"
+        echo "Dependencias Maven resueltas: $POM_COUNT POM(s) en cache local"
