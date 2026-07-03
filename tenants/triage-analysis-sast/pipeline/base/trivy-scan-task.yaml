@@ -6,6 +6,69 @@ spec:
   workspaces:
     - name: source-dir
   steps:
+    - name: warm-maven-cache
+      env:
+        - name: HOME
+          value: "$(workspaces.source-dir.path)"
+      image: image-registry.openshift-image-registry.svc:5000/triage-analysis-sast/consume-agent:1.0.1
+      workingDir: $(workspaces.source-dir.path)
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities: { drop: ["ALL"] }
+        runAsNonRoot: true
+        runAsUser: 1001
+      script: |
+        #!/bin/sh
+        cd "$(workspaces.source-dir.path)"
+
+        if [ ! -f pom.xml ]; then
+          echo "Sin pom.xml - omitiendo cache Maven"
+          exit 0
+        fi
+
+        M2_REPO="$(workspaces.source-dir.path)/.m2/repository"
+        mkdir -p "$M2_REPO"
+
+        cat > /tmp/maven-settings.xml <<'EOF'
+        <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+          <profiles>
+            <profile>
+              <id>security-scan-repos</id>
+              <repositories>
+                <repository>
+                  <id>central</id>
+                  <url>https://repo.maven.apache.org/maven2</url>
+                </repository>
+                <repository>
+                  <id>redhat-ga</id>
+                  <url>https://maven.repository.redhat.com/ga/</url>
+                </repository>
+              </repositories>
+            </profile>
+          </profiles>
+          <activeProfiles>
+            <activeProfile>security-scan-repos</activeProfile>
+          </activeProfiles>
+        </settings>
+        EOF
+
+        echo "Intentando poblar cache Maven en $M2_REPO (con reintentos)..."
+        attempt=1
+        while [ "$attempt" -le 3 ]; do
+          if mvn -s /tmp/maven-settings.xml \
+            -Dmaven.repo.local="$M2_REPO" \
+            -B dependency:resolve -DskipTests; then
+            break
+          fi
+          echo "WARN: mvn intento $attempt fallo (posible 429); esperando 60s..."
+          sleep 60
+          attempt=$((attempt + 1))
+        done
+
+        POM_COUNT="$(find "$M2_REPO" -name '*.pom' 2>/dev/null | wc -l | tr -d ' ')"
+        echo "Cache Maven listo: $POM_COUNT POM(s)"
     - name: trivy-scan
       env:
         - name: TRIVY_CACHE_DIR
@@ -27,14 +90,9 @@ spec:
 
         if [ -f pom.xml ]; then
           M2_REPO="$(workspaces.source-dir.path)/.m2/repository"
-          if [ -d "$M2_REPO" ] && [ -n "$(find "$M2_REPO" -name '*.pom' 2>/dev/null | head -1)" ]; then
-            POM_COUNT="$(find "$M2_REPO" -name '*.pom' 2>/dev/null | wc -l | tr -d ' ')"
-            echo "Cache Maven: $POM_COUNT POM(s) — escaneo offline (sin peticiones a Maven Central)"
-            TRIVY_OPTS="$TRIVY_OPTS --offline-scan"
-          else
-            echo "WARN: cache Maven vacío en $M2_REPO — riesgo de HTTP 429 en Maven Central"
-            echo "       Ejecute resolver-dependencies-maven antes de Trivy o espere Retry-After si el IP está bloqueado"
-          fi
+          POM_COUNT="$(find "$M2_REPO" -name '*.pom' 2>/dev/null | wc -l | tr -d ' ')"
+          echo "Proyecto Java: cache Maven=$POM_COUNT POM(s), modo offline (sin Maven Central)"
+          TRIVY_OPTS="$TRIVY_OPTS --offline-scan"
         fi
 
         trivy fs $TRIVY_OPTS . || true
