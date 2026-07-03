@@ -26,7 +26,11 @@ spec:
         echo "=== Artefactos de escaneo ==="
         ls -la trivy-results.json opengrep-results.sarif || true
         echo -n "Trivy CVEs (raw): "
-        jq '[.Results[]?.Vulnerabilities[]?] | length' trivy-results.json 2>/dev/null || echo "parse-error"
+        if command -v jq >/dev/null 2>&1; then
+          jq '[.Results[]?.Vulnerabilities[]?] | length' trivy-results.json 2>/dev/null || echo "parse-error"
+        else
+          grep -c '"VulnerabilityID"' trivy-results.json 2>/dev/null || echo "0"
+        fi
         echo -n "OpenGrep SARIF (runs[].results): "
         jq '[.runs[]?.results[]?] | length' opengrep-results.sarif 2>/dev/null || echo "parse-error"
         echo -n "OpenGrep legacy (results[]): "

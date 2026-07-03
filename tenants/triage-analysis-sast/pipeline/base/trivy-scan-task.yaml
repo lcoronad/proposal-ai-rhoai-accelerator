@@ -96,5 +96,13 @@ spec:
         fi
 
         trivy fs $TRIVY_OPTS . || true
-        echo -n "Trivy CVEs encontrados: "
-        jq '[.Results[]?.Vulnerabilities[]?] | length' "$(workspaces.source-dir.path)/trivy-results.json" 2>/dev/null || echo "0"
+
+        RESULTS_FILE="$(workspaces.source-dir.path)/trivy-results.json"
+        if [ ! -f "$RESULTS_FILE" ]; then
+          echo "WARN: trivy-results.json no fue creado"
+          echo '{"Results":[]}' > "$RESULTS_FILE"
+        fi
+
+        CVE_COUNT="$(grep -c '"VulnerabilityID"' "$RESULTS_FILE" 2>/dev/null || true)"
+        echo "Trivy CVEs encontrados: ${CVE_COUNT:-0}"
+        echo "trivy-results.json: $(wc -c < "$RESULTS_FILE" | tr -d ' ') bytes"
