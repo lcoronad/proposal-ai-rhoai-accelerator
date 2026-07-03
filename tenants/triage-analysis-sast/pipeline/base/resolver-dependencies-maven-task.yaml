@@ -16,4 +16,54 @@ spec:
         runAsUser: 1001
       script: |
         #!/bin/sh
-        mvn dependency:resolve -Dmaven.repo.local=$(workspaces.source-dir.path)/.m2 || true
+        set -e
+        cd "$(workspaces.source-dir.path)"
+
+        if [ ! -f pom.xml ]; then
+          echo "Sin pom.xml — omitiendo resolución Maven"
+          exit 0
+        fi
+
+        cat > /tmp/maven-settings.xml <<'EOF'
+        <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+          <profiles>
+            <profile>
+              <id>security-scan-repos</id>
+              <repositories>
+                <repository>
+                  <id>central</id>
+                  <url>https://repo.maven.apache.org/maven2</url>
+                </repository>
+                <repository>
+                  <id>redhat-ga</id>
+                  <url>https://maven.repository.redhat.com/ga/</url>
+                </repository>
+              </repositories>
+              <pluginRepositories>
+                <pluginRepository>
+                  <id>central</id>
+                  <url>https://repo.maven.apache.org/maven2</url>
+                </pluginRepository>
+                <pluginRepository>
+                  <id>redhat-ga</id>
+                  <url>https://maven.repository.redhat.com/ga/</url>
+                </pluginRepository>
+              </pluginRepositories>
+            </profile>
+          </profiles>
+          <activeProfiles>
+            <activeProfile>security-scan-repos</activeProfile>
+          </activeProfiles>
+        </settings>
+        EOF
+
+        echo "Resolviendo dependencias Maven..."
+        mvn -s /tmp/maven-settings.xml \
+          -Dmaven.repo.local="$(workspaces.source-dir.path)/.m2" \
+          -B dependency:resolve -DskipTests || {
+            echo "WARN: mvn dependency:resolve falló; Trivy seguirá escaneando pom.xml"
+            exit 0
+          }
+        echo "Dependencias Maven resueltas correctamente"

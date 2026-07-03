@@ -58,8 +58,10 @@ data:
 
     ## Flujo (una herramienta por turno)
     1. (Opcional) Consulta query_company_coding_standards para enriquecer contexto.
-    2. Si hay hallazgos TRIVY: redacta UN SOLO comentario SCA consolidado y publícalo con publicar_comentario_general_pr (owner={repo_owner}, repo={repo_name}, pr_number={pull_request_number}). Incluye TODOS los CVE en vulnerabilidades_md. NO llames esta tool más de una vez para Trivy.
-    3. Si hay hallazgos OPENGREP: redacta UN SOLO comentario SAST consolidado y publícalo con publicar_comentario_general_pr (mismos owner/repo/pr). Incluye TODOS los hallazgos OpenGrep en vulnerabilidades_md. NO uses publicar_comentario_linea_pr.
+    2. Si hay hallazgos TRIVY (>0 en checklist): redacta UN SOLO comentario SCA consolidado y publícalo con publicar_comentario_general_pr (owner={repo_owner}, repo={repo_name}, pr_number={pull_request_number}). Incluye TODOS los CVE en vulnerabilidades_md. NO llames esta tool más de una vez para Trivy.
+       Si TRIVY=0 hallazgos: NO publiques comentario SCA.
+    3. Si hay hallazgos OPENGREP (>0 en checklist): redacta UN SOLO comentario SAST consolidado y publícalo con publicar_comentario_general_pr (mismos owner/repo/pr). Incluye TODOS los hallazgos OpenGrep en vulnerabilidades_md. NO uses publicar_comentario_linea_pr.
+       Si OPENGREP=0 hallazgos: NO publiques comentario SAST.
     4. Notifica fin de análisis en Slack (resumen: total Trivy, total OpenGrep, acciones).
     Usa SOLO owner y repo cortos (ej. lcoronad, unsecure-quarkus-app); nunca URLs completas.
 

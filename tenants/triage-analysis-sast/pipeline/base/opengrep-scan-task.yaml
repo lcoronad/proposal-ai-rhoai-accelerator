@@ -21,8 +21,26 @@ spec:
         runAsUser: 1001
       script: |
         #!/bin/sh
-        set -e
         cd "$(workspaces.source-dir.path)"
-        /root/.opengrep/cli/latest/opengrep scan --config=auto \
+        SCAN_CONFIG=""
+        if [ -f pom.xml ]; then
+          SCAN_CONFIG="$SCAN_CONFIG --config=p/java"
+        fi
+        if [ -f requirements.txt ] || [ -f pyproject.toml ]; then
+          SCAN_CONFIG="$SCAN_CONFIG --config=p/python"
+        fi
+        if [ -f .semgrep/demo-java.yaml ]; then
+          SCAN_CONFIG="$SCAN_CONFIG --config=.semgrep/demo-java.yaml"
+        fi
+        if [ -f .semgrep/demo-python.yaml ]; then
+          SCAN_CONFIG="$SCAN_CONFIG --config=.semgrep/demo-python.yaml"
+        fi
+        if [ -z "$SCAN_CONFIG" ]; then
+          SCAN_CONFIG="--config=auto"
+        fi
+        echo "OpenGrep scan config:$SCAN_CONFIG"
+        /root/.opengrep/cli/latest/opengrep scan $SCAN_CONFIG \
           --sarif \
           --output="$(workspaces.source-dir.path)/opengrep-results.sarif" || true
+        echo -n "SARIF findings: "
+        jq '[.runs[]?.results[]?] | length' opengrep-results.sarif 2>/dev/null || echo "0"

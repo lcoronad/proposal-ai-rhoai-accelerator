@@ -17,10 +17,20 @@ spec:
       workingDir: $(workspaces.source-dir.path)
       script: |
         #!/bin/sh
-        cd $(workspaces.source-dir.path)
-        
-        [ -f trivy-results.json ] || echo "{}" > trivy-results.json
-        [ -f opengrep-results.sarif ] || echo "{}" > opengrep-results.sarif
+        set -e
+        cd "$(workspaces.source-dir.path)"
+
+        [ -f trivy-results.json ] || echo '{"Results":[]}' > trivy-results.json
+        [ -f opengrep-results.sarif ] || echo '{"runs":[]}' > opengrep-results.sarif
+
+        echo "=== Artefactos de escaneo ==="
+        ls -la trivy-results.json opengrep-results.sarif || true
+        echo -n "Trivy CVEs (raw): "
+        jq '[.Results[]?.Vulnerabilities[]?] | length' trivy-results.json 2>/dev/null || echo "parse-error"
+        echo -n "OpenGrep SARIF (runs[].results): "
+        jq '[.runs[]?.results[]?] | length' opengrep-results.sarif 2>/dev/null || echo "parse-error"
+        echo -n "OpenGrep legacy (results[]): "
+        jq '[.results[]?] | length' opengrep-results.sarif 2>/dev/null || echo "0"
 
         jq -n \
           --arg repo "$(params.repo-path)" \
@@ -29,9 +39,55 @@ spec:
           --arg commit_id "$(params.commit-id)" \
           --slurpfile trivy trivy-results.json \
           --slurpfile opengrep opengrep-results.sarif \
-          '{"repo_path": $repo, "pull_request_number": $pr, "repo_owner": $repo_owner, "commit_id": $commit_id, "trivy_json": [$trivy[0].Results[]? | .Target as $target | .Vulnerabilities[]? | { "id": (.VulnerabilityID // "UNKNOWN"), "pkg": (.PkgName // ""), "severity": (.Severity // ""), "target": $target, "fixed_version": (.FixedVersion // ""), "description": (.Description // .Title // "") } ], "opengrep_sarif": [$opengrep[0].results[]? | { "rule_id": (.check_id // ""), "path": (.path // ""), "line": (.start.line // 0), "severity": (.extra.severity // .level // ""), "message": (.extra.message // ""), "cwe": (.extra.metadata.cwe[0] // "") } ]}' \
-          > payload.json
-        
+          '{
+            repo_path: $repo,
+            pull_request_number: $pr,
+            repo_owner: $repo_owner,
+            commit_id: $commit_id,
+            trivy_json: [
+              $trivy[0].Results[]? | .Target as $target
+              | .Vulnerabilities[]?
+              | {
+                  id: (.VulnerabilityID // "UNKNOWN"),
+                  pkg: (.PkgName // ""),
+                  severity: (.Severity // ""),
+                  target: $target,
+                  fixed_version: (.FixedVersion // ""),
+                  description: (.Description // .Title // "")
+                }
+            ],
+            opengrep_sarif: [
+              (
+                [
+                  ($opengrep[0].runs[]?.results[]? | {
+                    rule_id: (.ruleId // .check_id // ""),
+                    path: (
+                      .locations[0]?.physicalLocation?.artifactLocation?.uri
+                      // .path // ""
+                    ),
+                    line: (
+                      .locations[0]?.physicalLocation?.region?.startLine
+                      // .start.line // 0
+                    ),
+                    severity: (.level // .extra.severity // ""),
+                    message: (.message.text // .extra.message // ""),
+                    cwe: (.properties.cwe[0] // .extra.metadata.cwe[0] // "")
+                  }),
+                  ($opengrep[0].results[]? | {
+                    rule_id: (.check_id // .ruleId // ""),
+                    path: (.path // ""),
+                    line: (.start.line // 0),
+                    severity: (.extra.severity // .level // ""),
+                    message: (.extra.message // .message.text // ""),
+                    cwe: (.extra.metadata.cwe[0] // "")
+                  })
+                ]
+              )[]
+            ]
+          }' > payload.json
+
+        echo "=== Payload resumen ==="
+        jq '{trivy: (.trivy_json | length), opengrep: (.opengrep_sarif | length)}' payload.json
         cat payload.json
 
         curl -s -X POST -H "Content-Type: application/json" -d @payload.json \

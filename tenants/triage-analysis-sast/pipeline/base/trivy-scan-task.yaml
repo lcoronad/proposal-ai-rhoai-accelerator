@@ -21,4 +21,7 @@ spec:
         runAsUser: 1001
       script: |
         #!/bin/sh
-        trivy fs --format json --output $(workspaces.source-dir.path)/trivy-results.json . || true
+        cd "$(workspaces.source-dir.path)"
+        trivy fs --format json --output "$(workspaces.source-dir.path)/trivy-results.json" . || true
+        echo -n "Trivy CVEs encontrados: "
+        jq '[.Results[]?.Vulnerabilities[]?] | length' "$(workspaces.source-dir.path)/trivy-results.json" 2>/dev/null || echo "0"
