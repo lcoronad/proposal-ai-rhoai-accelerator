@@ -57,7 +57,10 @@ spec:
                   severity: (.Severity // ""),
                   target: $target,
                   fixed_version: (.FixedVersion // ""),
-                  description: (.Description // .Title // "")
+                  description: (
+                    (.Description // .Title // "")
+                    | if length > 180 then .[0:180] + "..." else . end
+                  )
                 }
             ],
             opengrep_sarif: [
