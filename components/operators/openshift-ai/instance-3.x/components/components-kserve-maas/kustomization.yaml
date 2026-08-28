@@ -8,3 +8,6 @@ patches:
 
 resources:
   - gateway.yaml
+  - maas-postgresql-deployment.yaml
+  - maas-postgresql-service.yaml
+  - maas-db-configmap.yaml

@@ -4,4 +4,6 @@ metadata:
   name: odh-dashboard-config
 spec:
   dashboardConfig:
+    modelAsService: true
     genAiStudio: true
+    maasAuthPolicies: true
