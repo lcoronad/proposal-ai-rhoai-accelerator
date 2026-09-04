@@ -6,17 +6,19 @@ resources:
 
 components:
   - ../../components/components-aipipelines
+  - ../../components/components-distributed-workloads
   - ../../components/components-feast
   - ../../components/components-kserve
   - ../../components/components-kserve-maas
   - ../../components/components-modelregistry
+  - ../../components/components-llamastack
   - ../../components/components-ray
   - ../../components/components-trainingoperator
   - ../../components/components-trustyai
   - ../../components/components-workbenches
+  - ../../components/dashboard-genAIstudio
   - ../../components/hardware-profiles-nvidia-gpu
   - ../../components/idle-notebook-culling
   - ../../components/inference-gateway
+  - ../../components/model-llama-3-1-8b
   - ../../components/rhoai-auth
-  - ../../components/dashboard-genAIstudio
-  - ../../components/components-distributed-workloads

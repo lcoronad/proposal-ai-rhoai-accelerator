@@ -1,0 +1,16 @@
+apiVersion: maas.opendatahub.io/v1alpha1
+kind: MaaSAuthPolicy
+metadata:
+  name: llama-3-1-8b-access
+  namespace: models-as-a-service
+  annotations:
+    openshift.io/display-name: "Llama 3 1 8B Access"
+    openshift.io/description: "Grants all authenticated users access to Llama 3 1 8B"
+spec:
+  modelRefs:
+    - name: llama-3-1-8b-instruct-distributed
+      namespace: llm
+  subjects:
+    groups:
+      - name: system:authenticated
+    users: []

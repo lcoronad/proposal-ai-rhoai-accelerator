@@ -5,5 +5,10 @@ metadata:
 spec:
   dashboardConfig:
     modelAsService: true
+    observabilityDashboard: true
     genAiStudio: true
-    maasAuthPolicies: true
+    disableKServeMetrics: false
+    disableLMEval: false
+    disableModelCatalog: false
+    disableModelRegistry: false
+    disableTracking: false
