@@ -7,6 +7,9 @@ metadata:
     openshift.io/display-name: distributed/Llama-3.1-8B-Instruct
     opendatahub.io/hardware-profile-namespace: redhat-ods-applications
     opendatahub.io/hardware-profile-name: nvidia-gpu-serving
+  labels:
+    opendatahub.io/dashboard: "true"
+    opendatahub.io/genai-asset: "true"
 spec:
   replicas: 1
   model:
@@ -14,7 +17,10 @@ spec:
     name: llama-3-1-8b-instruct
   router:
     route: {}
-    gateway: {}
+    gateway:
+      refs:
+        - name: maas-default-gateway
+          namespace: openshift-ingress
     scheduler: {}
   template:
     containers:
