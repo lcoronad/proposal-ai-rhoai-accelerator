@@ -21,7 +21,7 @@ spec:
         managementState: Removed
     kueue:
       managementState: Removed
-    llamastackoperator:
+    ogx:
       managementState: Managed
     modelregistry:
       managementState: Removed

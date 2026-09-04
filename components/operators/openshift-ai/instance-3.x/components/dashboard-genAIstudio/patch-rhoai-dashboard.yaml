@@ -12,3 +12,4 @@ spec:
     disableModelCatalog: false
     disableModelRegistry: false
     disableTracking: false
+    maasAuthPolicies: true

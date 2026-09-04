@@ -4,5 +4,5 @@ metadata:
   name: default
 spec:
   components:
-    llamastackoperator:
+    ogx:
       managementState: Managed
