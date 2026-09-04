@@ -3,4 +3,4 @@ kind: Component
 
 resources:
   - llm
-  - maas
+  #- maas
