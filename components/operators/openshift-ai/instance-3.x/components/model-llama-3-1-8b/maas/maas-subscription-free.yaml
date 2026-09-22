@@ -8,9 +8,9 @@ metadata:
     openshift.io/description: "Free tier: 100000 tokens/min for all authenticated users"
 spec:
   owner:
-    groups: []
-    users:
-      - system:serviceaccount:proposal-rh-ai:chatbot-ui
+    groups:
+      - name: system:authenticated
+    users: []
   modelRefs:
     - name: llama-3-1-8b-instruct-distributed
       namespace: llm
