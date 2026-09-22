@@ -19,7 +19,7 @@ spec:
     route: {}
     gateway:
       refs:
-        - name: maas-default-gateway-data-science-gateway-class
+        - name: maas-default-gateway
           namespace: openshift-ingress
     scheduler: {}
   template:
