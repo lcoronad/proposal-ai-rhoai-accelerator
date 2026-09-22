@@ -5,10 +5,19 @@ metadata:
   namespace: openshift-ingress
 spec:
   gatewayClassName: data-science-gateway-class
+  infrastructure:
+    parametersRef:
+      group: ""
+      kind: ConfigMap
+      name: maas-gateway-options
   listeners:
     - name: http
+      hostname: maas.apps.cluster-nrhln.nrhln.sandbox1257.opentlc.com
       port: 80
       protocol: HTTP
       allowedRoutes:
         namespaces:
-          from: All
+          from: Selector
+          selector:
+            matchLabels:
+              maas.opendatahub.io/gateway-access: "true"
