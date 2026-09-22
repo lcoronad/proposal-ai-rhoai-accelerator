@@ -3,6 +3,6 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - maas-auth-policy.yaml
+  #- maas-auth-policy.yaml
   - maas-model.yaml
   - maas-subscription-free.yaml
