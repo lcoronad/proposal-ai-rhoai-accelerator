@@ -23,3 +23,19 @@ spec:
           selector:
             matchLabels:
               maas.opendatahub.io/gateway-access: "true"
+    - name: https
+      hostname: maas.apps.cluster-nrhln.nrhln.sandbox1257.opentlc.com
+      port: 443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              maas.opendatahub.io/gateway-access: "true"
+      tls:
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: cert-manager-ingress-cert
+        mode: Terminate
