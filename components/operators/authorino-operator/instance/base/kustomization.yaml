@@ -5,4 +5,4 @@ namespace: openshift-operators
 
 resources:
   - authorino.yaml
-  - auth-service-annotation.yaml
+  - service-annotation.yaml
