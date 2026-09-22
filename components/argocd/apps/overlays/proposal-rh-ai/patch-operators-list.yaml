@@ -70,7 +70,7 @@ spec:
         url: https://kubernetes.default.svc
         values:
           name: authorino-operator
-          path: components/operators/authorino-operator/operator/overlays/stable
+          path: components/operators/authorino-operator/aggregate/overlays/auth
       
       #- cluster: local
       #   url: https://kubernetes.default.svc
