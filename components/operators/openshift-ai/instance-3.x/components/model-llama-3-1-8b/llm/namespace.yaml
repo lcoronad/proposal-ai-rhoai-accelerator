@@ -3,6 +3,6 @@ kind: Namespace
 metadata:
   name: llm
   labels:
-    opendatahub.io/generated-namespace: true
-    maas.opendatahub.io/gateway-access: true
-    opendatahub.io/dashboard: true
+    opendatahub.io/generated-namespace: 'true'
+    maas.opendatahub.io/gateway-access: 'true'
+    opendatahub.io/dashboard: 'true'
