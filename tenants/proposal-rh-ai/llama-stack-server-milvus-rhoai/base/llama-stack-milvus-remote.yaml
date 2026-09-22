@@ -88,10 +88,10 @@ spec:
         value: "true"
       - name: MCP_SERVER_OCP_URL
         value: http://ocp-agent-service.proposal-rh-ai.svc.cluster.local:7860/gradio_api/mcp/sse
-    network:
-      port: 8321
-    distribution:
-      name: rh-dev
-    overrideConfig:
-      key: config.yaml
-      name: custom-llama-stack-config
+  network:
+    port: 8321
+  distribution:
+    name: rh-dev
+  overrideConfig:
+    key: config.yaml
+    name: custom-llama-stack-config
