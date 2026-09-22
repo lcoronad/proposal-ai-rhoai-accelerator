@@ -11,6 +11,7 @@ spec:
     - name: llama-3-1-8b-instruct-distributed
       namespace: llm
   subjects:
-    groups:
-      - name: system:authenticated
+    #groups:
+    #  - name: system:authenticated
+    groups: []
     users: []
