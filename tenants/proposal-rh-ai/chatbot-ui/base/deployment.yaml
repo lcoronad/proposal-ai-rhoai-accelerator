@@ -23,7 +23,7 @@ spec:
               memory: 512Mi
           env:
             - name: API_KEY
-              value: 'sk-oai-PTk3IiNYDWp2LxrS_NTziSsez3P69GG67gClPsWN6XUtLVmBo4Gh1kkuXri3'
+              value: 'sk-oai-OP6xf4PbSa75rCnr_Yu5I5J5kZZisaaVI2h8OqSPiT7jHZz6zT1iYQt0zZje'
             - name: URL_LLM
               value: 'https://maas.apps.cluster-nrhln.nrhln.sandbox1257.opentlc.com/v1'
             - name: APP_LOG_LEVEL
