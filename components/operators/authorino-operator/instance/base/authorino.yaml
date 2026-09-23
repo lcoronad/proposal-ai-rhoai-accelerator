@@ -11,6 +11,13 @@ spec:
       enabled: true
       certSecretRef:
         name: authorino-server-cert
+  volumes:
+    defaultMode: 420
+    items:
+      - configMaps:
+          - openshift-service-ca.crt
+        mountPath: /etc/pki/tls/certs/maas-ca
+        name: openshift-service-ca
   oidcServer:
     tls:
       enabled: false
